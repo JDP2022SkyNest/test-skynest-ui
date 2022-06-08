@@ -6,9 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
-    private By registerLink = By.xpath("//*[@id=\"root\"]/div/div/form/div[5]/a");
+    private final WebDriver driver;
+    private final WebDriverWait wait;
+    private final By registerLink = By.linkText("Register here");
 
     public LoginPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -16,6 +16,6 @@ public class LoginPage {
     }
 
     public void clickRegisterLink() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(registerLink)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(registerLink)).click();
     }
 }

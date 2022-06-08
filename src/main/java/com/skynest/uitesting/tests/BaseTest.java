@@ -2,9 +2,8 @@ package com.skynest.uitesting.tests;
 
 import com.github.javafaker.Faker;
 import com.skynest.uitesting.pages.LoginPage;
-import com.skynest.uitesting.pages.RegisterPage;
+import com.skynest.uitesting.pages.RegistrationPage;
 import com.skynest.uitesting.utils.BaseHelper;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,8 +14,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-
 import java.time.Duration;
+
+import static com.skynest.uitesting.utils.BaseHelper.randomEmail;
 
 public class BaseTest {
     public WebDriver driver;
@@ -25,10 +25,9 @@ public class BaseTest {
     public static final int TIMEOUT = 20;
     public static final String BASE_URL = "http://localhost:3000/login";
     protected LoginPage loginPage;
-    protected RegisterPage registerPage;
+    protected RegistrationPage registrationPage;
 
     public Faker faker = new Faker();
-    public BaseHelper helper = new BaseHelper();
 
     public String firstName;
     public String lastName;
@@ -42,43 +41,42 @@ public class BaseTest {
     public void setUserCredentials() {
         firstName = faker.name().firstName();
         lastName = faker.name().firstName();
-        emailAddress = helper.randomEmail();
-        phoneNumber = faker.phoneNumber().phoneNumber();
+        emailAddress = randomEmail();
+        phoneNumber = "23458752345";
         homeAddress = faker.address().fullAddress();
-        password = "Selenium1";
+        password = "Selenium22";
         confirmPassword = password;
     }
 
     @BeforeMethod
     public void beforeMethod() {
-        if (browser.equalsIgnoreCase("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase("edge")) {
-            WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
-        } else if (browser.equalsIgnoreCase("ie")) {
-            WebDriverManager.iedriver().setup();
-            driver = new InternetExplorerDriver();
-        } else {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+        switch (browser.toLowerCase()) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "src/test/driver/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                driver = new EdgeDriver();
+                break;
+            case "ie":
+                driver = new InternetExplorerDriver();
+                break;
+            default:
+                driver = new ChromeDriver();
         }
-
         wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
-
         initPageObjects();
-
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.navigate().to(BASE_URL);
     }
 
     private void initPageObjects() {
         loginPage = new LoginPage(driver, wait);
-        registerPage = new RegisterPage(driver, wait);
+        registrationPage = new RegistrationPage(driver, wait);
     }
 
     @AfterMethod
@@ -97,5 +95,9 @@ public class BaseTest {
     public void scroll(int h, int v) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(" + h + "," + v + ")");
+    }
+
+    public void waitForUrl(String url) {
+        wait.until(arg -> driver.getCurrentUrl().equals(url));
     }
 }
