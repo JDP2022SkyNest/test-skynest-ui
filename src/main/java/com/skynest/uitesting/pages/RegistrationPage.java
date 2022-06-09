@@ -3,13 +3,10 @@ package com.skynest.uitesting.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RegistrationPage {
-    private final WebDriver driver;
-    private final WebDriverWait wait;
+public class RegistrationPage extends BasePage {
 
     public RegistrationPage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+        super(driver, wait);
     }
 
     public RegistrationForm fillRegistrationForm() {

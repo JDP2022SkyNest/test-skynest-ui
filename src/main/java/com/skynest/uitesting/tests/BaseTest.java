@@ -3,7 +3,6 @@ package com.skynest.uitesting.tests;
 import com.github.javafaker.Faker;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
-import com.skynest.uitesting.utils.BaseHelper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,21 +13,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+
 import java.time.Duration;
 
 import static com.skynest.uitesting.utils.BaseHelper.randomEmail;
 
 public class BaseTest {
+    public static final int TIMEOUT = 20;
     public WebDriver driver;
     public WebDriverWait wait;
     public String browser = "chrome";
-    public static final int TIMEOUT = 20;
-    public static final String BASE_URL = "http://localhost:3000/login";
-    protected LoginPage loginPage;
-    protected RegistrationPage registrationPage;
-
     public Faker faker = new Faker();
-
     public String firstName;
     public String lastName;
     public String emailAddress;
@@ -36,6 +31,8 @@ public class BaseTest {
     public String homeAddress;
     public String password;
     public String confirmPassword;
+    protected LoginPage loginPage;
+    protected RegistrationPage registrationPage;
 
     @BeforeClass
     public void setUserCredentials() {
@@ -71,7 +68,7 @@ public class BaseTest {
         initPageObjects();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.navigate().to(BASE_URL);
+
     }
 
     private void initPageObjects() {

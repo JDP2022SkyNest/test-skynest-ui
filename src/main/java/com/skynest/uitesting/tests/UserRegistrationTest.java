@@ -4,10 +4,13 @@ import com.skynest.uitesting.pages.RegistrationForm;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.skynest.uitesting.constants.PageUrlConstants.LOGIN_URL;
+
 public class UserRegistrationTest extends BaseTest {
 
     @Test
     public void registering_new_valid_user_should_navigate_to_login_page() {
+        registrationPage.openPage();
         loginPage.clickRegisterLink();
         RegistrationForm registrationForm = registrationPage.fillRegistrationForm()
                 .withFirstName(firstName)
@@ -19,7 +22,7 @@ public class UserRegistrationTest extends BaseTest {
                 .withConfirmPassword(confirmPassword);
         scroll(0, 400);
         registrationForm.submitForm();
-        waitForUrl(BASE_URL);
-        Assert.assertEquals(driver.getCurrentUrl(), BASE_URL);
+        waitForUrl(LOGIN_URL);
+        Assert.assertEquals(driver.getCurrentUrl(), LOGIN_URL);
     }
 }
