@@ -18,27 +18,8 @@ public class BaseTest {
     public WebDriver driver;
     public WebDriverWait wait;
     public String browser = "chrome";
-    //    public Faker faker = new Faker();
-//    public String firstName;
-//    public String lastName;
-//    public String emailAddress;
-//    public String phoneNumber;
-//    public String homeAddress;
-//    public String password;
-//    public String confirmPassword;
     protected LoginPage loginPage;
     protected RegistrationPage registrationPage;
-
-//    @BeforeClass
-//    public void setUserCredentials() {
-//        firstName = faker.name().firstName();
-//        lastName = faker.name().firstName();
-//        emailAddress = generateValidEmail();
-//        phoneNumber = "23458752345";
-//        homeAddress = faker.address().fullAddress();
-//        password = "Selenium22";
-//        confirmPassword = password;
-//    }
 
     @BeforeMethod
     public void beforeMethod() {
