@@ -1,9 +1,7 @@
 package com.skynest.uitesting.tests;
 
-import com.github.javafaker.Faker;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -11,39 +9,36 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
-
-import static com.skynest.uitesting.utils.BaseHelper.randomEmail;
 
 public class BaseTest {
     public static final int TIMEOUT = 20;
     public WebDriver driver;
     public WebDriverWait wait;
     public String browser = "chrome";
-    public Faker faker = new Faker();
-    public String firstName;
-    public String lastName;
-    public String emailAddress;
-    public String phoneNumber;
-    public String homeAddress;
-    public String password;
-    public String confirmPassword;
+    //    public Faker faker = new Faker();
+//    public String firstName;
+//    public String lastName;
+//    public String emailAddress;
+//    public String phoneNumber;
+//    public String homeAddress;
+//    public String password;
+//    public String confirmPassword;
     protected LoginPage loginPage;
     protected RegistrationPage registrationPage;
 
-    @BeforeClass
-    public void setUserCredentials() {
-        firstName = faker.name().firstName();
-        lastName = faker.name().firstName();
-        emailAddress = randomEmail();
-        phoneNumber = "23458752345";
-        homeAddress = faker.address().fullAddress();
-        password = "Selenium22";
-        confirmPassword = password;
-    }
+//    @BeforeClass
+//    public void setUserCredentials() {
+//        firstName = faker.name().firstName();
+//        lastName = faker.name().firstName();
+//        emailAddress = generateValidEmail();
+//        phoneNumber = "23458752345";
+//        homeAddress = faker.address().fullAddress();
+//        password = "Selenium22";
+//        confirmPassword = password;
+//    }
 
     @BeforeMethod
     public void beforeMethod() {
@@ -81,20 +76,12 @@ public class BaseTest {
         driver.quit();
     }
 
-    public void sleep(int timeout) {
-        try {
-            Thread.sleep(timeout);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void scroll(int h, int v) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(" + h + "," + v + ")");
-    }
 
     public void waitForUrl(String url) {
-        wait.until(arg -> driver.getCurrentUrl().equals(url));
+        wait.until(arg -> getCurrentUrl().equals(url));
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
     }
 }

@@ -1,5 +1,6 @@
 package com.skynest.uitesting.tests;
 
+import com.skynest.uitesting.models.User;
 import com.skynest.uitesting.pages.RegistrationForm;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,18 +12,18 @@ public class UserRegistrationTest extends BaseTest {
     @Test
     public void registering_new_valid_user_should_navigate_to_login_page() {
         registrationPage.openPage();
-        loginPage.clickRegisterLink();
+        User user = User.generateValidAccount();
         RegistrationForm registrationForm = registrationPage.fillRegistrationForm()
-                .withFirstName(firstName)
-                .withLastName(lastName)
-                .withEmail(emailAddress)
-                .withPhoneNumber(phoneNumber)
-                .withHomeAddress(homeAddress)
-                .withPassword(password)
-                .withConfirmPassword(confirmPassword);
-        scroll(0, 400);
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withEmail(user.getEmailAddress())
+                .withPhoneNumber(user.getPhoneNumber())
+                .withHomeAddress(user.getHomeAddress())
+                .withPassword(user.getPassword())
+                .withConfirmPassword(user.getConfirmPassword());
+        registrationPage.scroll(0, 400);
         registrationForm.submitForm();
         waitForUrl(LOGIN_URL);
-        Assert.assertEquals(driver.getCurrentUrl(), LOGIN_URL);
+        Assert.assertEquals(getCurrentUrl(), LOGIN_URL);
     }
 }
