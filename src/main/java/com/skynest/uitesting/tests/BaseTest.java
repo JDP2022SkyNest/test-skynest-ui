@@ -2,6 +2,7 @@ package com.skynest.uitesting.tests;
 
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -24,27 +25,26 @@ public class BaseTest {
     @BeforeMethod
     public void beforeMethod() {
         switch (browser.toLowerCase()) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", "src/test/driver/chromedriver.exe");
-                driver = new ChromeDriver();
-                break;
             case "firefox":
+                WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
             case "edge":
+                WebDriverManager.edgedriver().setup();
                 driver = new EdgeDriver();
                 break;
             case "ie":
+                WebDriverManager.iedriver().setup();
                 driver = new InternetExplorerDriver();
                 break;
             default:
+                WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
         }
         wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         initPageObjects();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
     }
 
     private void initPageObjects() {
@@ -56,7 +56,6 @@ public class BaseTest {
     public void afterMethod() {
         driver.quit();
     }
-
 
     public void waitForUrl(String url) {
         wait.until(arg -> getCurrentUrl().equals(url));

@@ -19,10 +19,6 @@ public class BasePage {
         driver.navigate().to(pagePath);
     }
 
-//    public void openPage(String url) {
-//        driver.navigate().to(url);
-//    }
-
     public void scroll(int horizontalPixel, int verticalPixel) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(" + horizontalPixel + "," + verticalPixel + ")");

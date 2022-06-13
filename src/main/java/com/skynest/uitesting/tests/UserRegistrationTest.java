@@ -24,6 +24,5 @@ public class UserRegistrationTest extends BaseTest {
         registrationPage.scroll(0, 400);
         registrationForm.submitForm();
         waitForUrl(LOGIN_URL);
-        Assert.assertEquals(getCurrentUrl(), LOGIN_URL);
     }
 }
