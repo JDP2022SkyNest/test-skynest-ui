@@ -16,6 +16,10 @@
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
         <javafaker.version>1.0.2</javafaker.version>
         <projectlombok.version>1.18.24</projectlombok.version>
+
+        <name>${project.name}</name>
+        <targetBrowser>chrome</targetBrowser>
+
     </properties>
 
     <dependencies>
@@ -51,5 +55,35 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.outputDirectory}/properties-from-pom.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
 
 </project>

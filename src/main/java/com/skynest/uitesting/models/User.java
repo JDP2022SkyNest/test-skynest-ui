@@ -18,7 +18,7 @@ public class User {
     private final String password;
     private final String confirmPassword;
 
-    public static User generateValidAccount() {
+    public static User generateValidUser() {
         String randomPassword = "Selenium22";
         String randomPhoneNumber = faker.phoneNumber().phoneNumber().replaceAll("-", "");
 

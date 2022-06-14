@@ -1,5 +1,6 @@
 package com.skynest.uitesting.tests;
 
+import com.skynest.uitesting.config.properties.PropertiesReader;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -12,19 +13,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class BaseTest {
     public static final int TIMEOUT = 20;
     public WebDriver driver;
     public WebDriverWait wait;
-    public String browser = "chrome";
     protected LoginPage loginPage;
     protected RegistrationPage registrationPage;
 
     @BeforeMethod
     public void beforeMethod() {
-        switch (browser.toLowerCase()) {
+        PropertiesReader propertiesReader = readPropertyFile();
+        switch (propertiesReader.getProperty("targetBrowser").toLowerCase()) {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
@@ -45,6 +47,15 @@ public class BaseTest {
         initPageObjects();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
+    private PropertiesReader readPropertyFile(){
+        try {
+            PropertiesReader reader = new PropertiesReader("properties-from-pom.properties");
+        return reader;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initPageObjects() {

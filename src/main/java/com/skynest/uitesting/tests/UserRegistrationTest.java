@@ -8,11 +8,10 @@ import org.testng.annotations.Test;
 import static com.skynest.uitesting.constants.PageUrlConstants.LOGIN_URL;
 
 public class UserRegistrationTest extends BaseTest {
-
     @Test
     public void registering_new_valid_user_should_navigate_to_login_page() {
         registrationPage.openPage();
-        User user = User.generateValidAccount();
+        User user = User.generateValidUser();
         RegistrationForm registrationForm = registrationPage.fillRegistrationForm()
                 .withFirstName(user.getFirstName())
                 .withLastName(user.getLastName())
@@ -24,5 +23,6 @@ public class UserRegistrationTest extends BaseTest {
         registrationPage.scroll(0, 400);
         registrationForm.submitForm();
         waitForUrl(LOGIN_URL);
+        Assert.assertEquals(getCurrentUrl(), LOGIN_URL);
     }
 }
