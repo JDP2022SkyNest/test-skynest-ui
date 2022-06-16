@@ -12,8 +12,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
-import java.io.IOException;
 import java.time.Duration;
 
 public class BaseTest {
@@ -22,11 +22,17 @@ public class BaseTest {
     public WebDriverWait wait;
     protected LoginPage loginPage;
     protected RegistrationPage registrationPage;
+    private String targetBrowser;
+
+    @BeforeSuite
+    public void setupSuite() {
+        PropertiesReader propertiesReader = PropertiesReader.getInstance();
+        targetBrowser = propertiesReader.getProperty("targetBrowser");
+    }
 
     @BeforeMethod
     public void beforeMethod() {
-        PropertiesReader propertiesReader = readPropertyFile();
-        switch (propertiesReader.getProperty("targetBrowser").toLowerCase()) {
+        switch (targetBrowser.toLowerCase()) {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
@@ -47,15 +53,6 @@ public class BaseTest {
         initPageObjects();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    }
-
-    private PropertiesReader readPropertyFile(){
-        try {
-            PropertiesReader reader = new PropertiesReader("properties-from-pom.properties");
-        return reader;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void initPageObjects() {

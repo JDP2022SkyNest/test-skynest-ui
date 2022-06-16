@@ -20,7 +20,7 @@ public class UserRegistrationTest extends BaseTest {
                 .withHomeAddress(user.getHomeAddress())
                 .withPassword(user.getPassword())
                 .withConfirmPassword(user.getConfirmPassword());
-        registrationPage.scroll(0, 400);
+        registrationPage.scroll(registrationForm.registerButtonSelector);
         registrationForm.submitForm();
         waitForUrl(LOGIN_URL);
         Assert.assertEquals(getCurrentUrl(), LOGIN_URL);

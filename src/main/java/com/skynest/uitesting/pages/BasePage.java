@@ -2,8 +2,10 @@ package com.skynest.uitesting.pages;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @RequiredArgsConstructor
@@ -14,13 +16,12 @@ public class BasePage {
     @Setter
     private String pagePath;
 
-
     public void openPage() {
         driver.navigate().to(pagePath);
     }
 
-    public void scroll(int horizontalPixel, int verticalPixel) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(" + horizontalPixel + "," + verticalPixel + ")");
+    public void scroll(By selector) {
+        WebElement element = driver.findElement(selector);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }

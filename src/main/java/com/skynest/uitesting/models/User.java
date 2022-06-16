@@ -20,8 +20,8 @@ public class User {
 
     public static User generateValidUser() {
         String randomPassword = "Selenium22";
-        String randomPhoneNumber = faker.phoneNumber().phoneNumber().replaceAll("-", "");
-
+        String randomPhoneNumber = faker.phoneNumber().phoneNumber()
+                .replaceAll("-", "").replaceAll("\\.", "");
         return new User(faker.name().firstName(), faker.name().lastName(), generateValidEmail(),
                 randomPhoneNumber, faker.address().fullAddress(), randomPassword, randomPassword);
     }
