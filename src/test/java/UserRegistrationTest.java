@@ -1,5 +1,3 @@
-package com.skynest.uitesting.tests;
-
 import com.skynest.uitesting.models.User;
 import com.skynest.uitesting.pages.RegistrationForm;
 import org.testng.Assert;

@@ -24,4 +24,5 @@ public class BasePage {
         WebElement element = driver.findElement(selector);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
 }

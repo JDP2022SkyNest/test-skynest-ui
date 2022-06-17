@@ -1,5 +1,3 @@
-package com.skynest.uitesting.tests;
-
 import com.skynest.uitesting.config.properties.PropertiesReader;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
@@ -11,8 +9,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
 
@@ -24,7 +22,7 @@ public class BaseTest {
     protected RegistrationPage registrationPage;
     private String targetBrowser;
 
-    @BeforeSuite
+    @BeforeClass
     public void setupSuite() {
         PropertiesReader propertiesReader = PropertiesReader.getInstance();
         targetBrowser = propertiesReader.getProperty("targetBrowser");

@@ -14,7 +14,7 @@ public class RegistrationForm {
     private final By lastNameSelector = By.id("lastNameInput");
     private final By emailAddressSelector = By.id("emailInput");
     private final By phoneNumberSelector = By.id("phoneInput");
-    private final By homeAddressSelector = By.id("adressInput");
+    private final By homeAddressSelector = By.id("addressInput");
     private final By passwordSelector = By.id("passwordInput");
     private final By confirmPasswordSelector = By.id("confPasswordInput");
 
@@ -59,7 +59,7 @@ public class RegistrationForm {
     }
 
     public void submitForm() {
-        wait.until(ExpectedConditions.elementToBeClickable(registerButtonSelector)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(registerButtonSelector)).click();
     }
 
     private void clearAndType(By locator, String text) {
