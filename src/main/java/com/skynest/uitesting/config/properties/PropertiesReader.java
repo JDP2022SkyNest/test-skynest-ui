@@ -17,13 +17,9 @@ public class PropertiesReader {
         }
     }
 
-    public static PropertiesReader getInstance() {
+    public static synchronized PropertiesReader getInstance() {
         if (instance == null) {
-            synchronized (PropertiesReader.class) {
-                if (instance == null) {
-                    instance = new PropertiesReader();
-                }
-            }
+            instance = new PropertiesReader();
         }
         return instance;
     }

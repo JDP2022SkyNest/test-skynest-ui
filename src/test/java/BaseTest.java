@@ -25,10 +25,7 @@ public class BaseTest {
     @BeforeClass
     public void setupSuite() {
         PropertiesReader propertiesReader = PropertiesReader.getInstance();
-        System.out.print(propertiesReader);
         targetBrowser = System.getProperty("targetBrowser", propertiesReader.getProperty("targetBrowser"));
-        System.out.print("browser\n");
-        System.out.print(targetBrowser);
     }
 
     @BeforeMethod

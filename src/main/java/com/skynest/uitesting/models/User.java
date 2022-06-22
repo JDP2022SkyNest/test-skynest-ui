@@ -9,7 +9,7 @@ import static com.skynest.uitesting.utils.RandomGenerator.generateValidEmail;
 @Getter
 @RequiredArgsConstructor
 public class User {
-    private static final Faker faker = new Faker();
+
     private final String firstName;
     private final String lastName;
     private final String emailAddress;
@@ -19,10 +19,9 @@ public class User {
     private final String confirmPassword;
 
     public static User generateValidUser() {
+        Faker faker = new Faker();
         String randomPassword = "Selenium22";
-        String randomPhoneNumber = faker.phoneNumber().phoneNumber()
-                .replaceAll("-", "").replaceAll("\\.", "");
-        return new User(faker.name().firstName(), faker.name().lastName(), generateValidEmail(),
-                randomPhoneNumber, faker.address().fullAddress(), randomPassword, randomPassword);
+        String randomPhoneNumber = faker.phoneNumber().phoneNumber().replaceAll("-", "").replaceAll("\\.", "");
+        return new User(faker.name().firstName(), faker.name().lastName(), generateValidEmail(), randomPhoneNumber, faker.address().fullAddress(), randomPassword, randomPassword);
     }
 }

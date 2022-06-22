@@ -59,7 +59,7 @@ public class RegistrationForm {
     }
 
     public void submitForm() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(registerButtonSelector)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(registerButtonSelector)).click();
     }
 
     private void clearAndType(By locator, String text) {

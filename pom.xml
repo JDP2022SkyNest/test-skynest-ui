@@ -16,6 +16,7 @@
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
         <javafaker.version>1.0.2</javafaker.version>
         <projectlombok.version>1.18.24</projectlombok.version>
+        <configuration.version>1.10</configuration.version>
 
     </properties>
 
@@ -54,7 +55,7 @@
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
-            <version>1.10</version>
+            <version>${configuration.version}</version>
         </dependency>
 
     </dependencies>
