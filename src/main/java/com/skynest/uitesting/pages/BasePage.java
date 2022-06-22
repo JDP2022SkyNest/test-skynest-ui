@@ -20,9 +20,10 @@ public class BasePage {
         driver.navigate().to(pagePath);
     }
 
-    public void scroll(By selector) {
+    public void scroll(By selector) throws InterruptedException {
         WebElement element = driver.findElement(selector);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        Thread.sleep(2000);
     }
 
 }

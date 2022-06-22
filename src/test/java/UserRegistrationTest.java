@@ -7,7 +7,7 @@ import static com.skynest.uitesting.constants.PageUrlConstants.LOGIN_URL;
 
 public class UserRegistrationTest extends BaseTest {
     @Test
-    public void registering_new_valid_user_should_navigate_to_login_page() {
+    public void registering_new_valid_user_should_navigate_to_login_page() throws InterruptedException {
         registrationPage.openPage();
         User user = User.generateValidUser();
         RegistrationForm registrationForm = registrationPage.fillRegistrationForm()
