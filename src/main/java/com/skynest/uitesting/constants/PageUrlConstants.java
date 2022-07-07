@@ -7,4 +7,9 @@ public class PageUrlConstants {
     public static final String REGISTER_URL = BASE_URL + "/signup";
     public static final String DASHBOARD_URL = BASE_URL + "/";
 
+    public static final String USER_PROFILE_URL = BASE_URL + "/user-info";
+
+    public static final String ADMIN_PANEL_URL  = BASE_URL + "/admin-panel";
+
+
 }

@@ -1,8 +1,12 @@
+import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginForm;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static com.skynest.uitesting.constants.PageUrlConstants.DASHBOARD_URL;
+import static com.skynest.uitesting.constants.PageUrlConstants.*;
 
 public class UserLoginTest extends BaseTest {
 
@@ -16,7 +20,10 @@ public class UserLoginTest extends BaseTest {
         loginForm.submitForm();
         waitForUrl(DASHBOARD_URL);
         Assert.assertEquals(getCurrentUrl(), DASHBOARD_URL);
-        driver.close();
-        driver.quit();
+        WebElement logo = driver.findElement(By.xpath("//div[@class='tool-bar']"));
+        Assert.assertTrue(logo.isDisplayed());
+        driver.navigate().to(DASHBOARD_URL);
+        HomePage.userProfileDropdown(driver).click();
+        //HomePage.userProfileDropdown(driver).sendKeys(Keys.RETURN);
     }
 }

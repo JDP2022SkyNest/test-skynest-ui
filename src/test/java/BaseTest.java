@@ -1,4 +1,5 @@
 import com.skynest.uitesting.config.properties.PropertiesReader;
+import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -18,14 +19,27 @@ public class BaseTest {
     public static final int TIMEOUT = 20;
     public WebDriver driver;
     public WebDriverWait wait;
-    protected LoginPage loginPage;
     protected RegistrationPage registrationPage;
+    protected LoginPage loginPage;
+    protected HomePage homePage;
     private String targetBrowser;
+    public String userEmail;
+    public String userPassword;
 
     @BeforeClass
     public void setupSuite() {
         PropertiesReader propertiesReader = PropertiesReader.getInstance();
         targetBrowser = System.getProperty("targetBrowser", propertiesReader.getProperty("targetBrowser"));
+    }
+
+    public void setUpEmail() {
+        PropertiesReader propertiesReader = PropertiesReader.getInstance();
+        String userEmail = System.getProperty("userEmail", propertiesReader.getProperty("nemanja.mihajlovic@htecgroup.com"));
+    }
+
+    public void setUpPassword() {
+        PropertiesReader propertiesReader = PropertiesReader.getInstance();
+        String userPassword = System.getProperty("userPassword", propertiesReader.getProperty("Uzivamufanti12345"));
     }
 
     @BeforeMethod

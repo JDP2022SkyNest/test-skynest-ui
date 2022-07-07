@@ -14,6 +14,8 @@ public class LoginForm {
     private final By emailAddressSelector = By.id("emailInput");
     private final By passwordSelector = By.id("passwordInput");
 
+    private final By logoSelector = By.xpath("//div[@class='tool-bar']");
+
     protected LoginForm(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
