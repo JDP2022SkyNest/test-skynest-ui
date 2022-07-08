@@ -4,11 +4,13 @@ import com.skynest.uitesting.constants.PageUrlConstants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage {
 
     private static WebElement element = null;
+    //private static WebElement select = null;
 
     public HomePage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
@@ -33,5 +35,13 @@ public class HomePage extends BasePage {
         element = driver.findElement(By.xpath("//div[@class='burger']//*[name()='svg']"));
         return element;
     }
+
+//    public static WebElement ddown(WebDriver driver) {
+//        select = driver.findElement(By.id("dropdown-menu-align-end"));
+//        return select = new Select(ddown);
+//    }
+
+//    WebElement userDropDown = driver.findElement(By.id("dropdown-menu-align-end"));
+//    Select select = new Select(userDropDown);
 
 }

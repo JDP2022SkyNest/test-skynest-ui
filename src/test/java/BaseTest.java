@@ -2,6 +2,7 @@ import com.skynest.uitesting.config.properties.PropertiesReader;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.RegistrationPage;
+import com.skynest.uitesting.pages.UserInfoPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,6 +23,7 @@ public class BaseTest {
     protected RegistrationPage registrationPage;
     protected LoginPage loginPage;
     protected HomePage homePage;
+    protected UserInfoPage userInfoPage;
     private String targetBrowser;
     public String userEmail;
     public String userPassword;
