@@ -1,8 +1,5 @@
 import com.skynest.uitesting.config.properties.PropertiesReader;
-import com.skynest.uitesting.pages.HomePage;
-import com.skynest.uitesting.pages.LoginPage;
-import com.skynest.uitesting.pages.RegistrationPage;
-import com.skynest.uitesting.pages.UserInfoPage;
+import com.skynest.uitesting.pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -44,6 +41,15 @@ public class BaseTest {
         String userPassword = System.getProperty("userPassword", propertiesReader.getProperty("Uzivamufanti12345"));
     }
 
+//    public void login() throws InterruptedException {
+//        loginPage.openPage();
+//        LoginForm loginForm = loginPage.fillLoginForm()
+//                .withEmail("nemanja.mihajlovic@htecgroup.com")
+//                .withPassword("Uzivamufanti12345");
+//        loginPage.scroll(loginForm.loginButtonSelector);
+//        loginForm.submitForm();
+//    }
+
     @BeforeMethod
     public void beforeMethod() {
         switch (targetBrowser.toLowerCase()) {
@@ -72,6 +78,15 @@ public class BaseTest {
     private void initPageObjects() {
         loginPage = new LoginPage(driver, wait);
         registrationPage = new RegistrationPage(driver, wait);
+    }
+
+    public void login() throws InterruptedException {
+        loginPage.openPage();
+        LoginForm loginForm = loginPage.fillLoginForm()
+                .withEmail("nemanja.mihajlovic@htecgroup.com")
+                .withPassword("Uzivamufanti12345");
+        loginPage.scroll(loginForm.loginButtonSelector);
+        loginForm.submitForm();
     }
 
     @AfterMethod

@@ -11,7 +11,7 @@ import static com.skynest.uitesting.constants.PageUrlConstants.*;
 
 public class UserLoginTest extends BaseTest {
 
-    @Test
+    //@Test
     public void login_valid_user_redirect_to_home_page() throws InterruptedException {
         loginPage.openPage();
         LoginForm loginForm = loginPage.fillLoginForm()
@@ -24,15 +24,13 @@ public class UserLoginTest extends BaseTest {
         //WebElement logo = driver.findElement(By.xpath("//div[@class='tool-bar']"));
         //Assert.assertTrue(logo.isDisplayed());
         //driver.navigate().to(DASHBOARD_URL);
-        Select userProfileDDbutton = new Select(driver.findElement(By.xpath("//button[@id='dropdown-menu-align-end']")));
-        userProfileDDbutton.selectByIndex(0);
-        waitForUrl(USER_PROFILE_URL);
+        //Select userProfileDDbutton = new Select(driver.findElement(By.xpath("//button[@id='dropdown-menu-align-end']")));
+        //userProfileDDbutton.selectByIndex(0);
+        //waitForUrl(USER_PROFILE_URL);
         //HomePage.userProfileDropdown(driver).click();
         Thread.sleep(3000);
         //HomePage.select.selectByValue();
         //HomePage.userProfileDropdown(driver).sendKeys(Keys.RETURN);
     }
-
-    public static void logedIn() {
-    }
 }
+
