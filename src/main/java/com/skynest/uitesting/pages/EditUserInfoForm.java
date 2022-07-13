@@ -15,7 +15,7 @@ public class EditUserInfoForm {
 
     public final By logoutButton = By.xpath("//button[normalize-space()='Logout']");
     public final By updateUserInfoButton = By.xpath("//button[normalize-space()='Update']");
-    private final By firstNameModifier = By.cssSelector("input[class='form-control border-danger']");
+    private final By firstNameModifier = By.cssSelector("div[class='card-body'] div:nth-child(1) div:nth-child(2) input:nth-child(1)");
     private final By lastNameModifier = By.xpath("//div[@class='col-lg-8 mb-3']//div[2]//div[2]//input[1]");
     private final By phoneNumberModifier = By.xpath("//input[@type='number']");
     private final By companyPositionModifier = By.xpath("//input[@placeholder='Please enter a value here']");
@@ -64,6 +64,12 @@ public class EditUserInfoForm {
     private WebElement waitForVisibilityOfElement(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
+//    public void waitAndClickEditButton() {
+//        wait.until(ExpectedConditions.visibilityOfElementLocated (By.xpath("//button[contains(text(),'Edit')]")));
+//        WebElement m = driver.findElement(By.xpath("//button[contains(text(),'Edit')]"));
+//        m.click();
+//    }
 
 //    EditedUser editedUser = EditedUser.generateModifiedData();
 //    public static UserInfoPage userInfoPage;
