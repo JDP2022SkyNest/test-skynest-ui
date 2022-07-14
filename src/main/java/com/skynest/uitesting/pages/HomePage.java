@@ -1,47 +1,46 @@
 package com.skynest.uitesting.pages;
 
-import com.skynest.uitesting.constants.PageUrlConstants;
-import org.openqa.selenium.By;
+import com.skynest.uitesting.config.ConfigurationManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
-public class HomePage extends BasePage {
+import static org.testng.Assert.assertEquals;
 
-    private static WebElement element = null;
-    //private static WebElement select = null;
+public class HomePage extends LoadableComponent<HomePage> {
 
-    public HomePage(WebDriver driver, WebDriverWait wait) {
-        super(driver, wait);
-        setPagePath(PageUrlConstants.DASHBOARD_URL);
+    private final WebDriver driver;
+
+    public static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
+    private static final String USER_DROPDOWN_MENU_LOCATOR = "//div[@class = 'dropdown-menu-admin']";
+
+    @FindBy(how = How.CLASS_NAME, using = "side-bar") private WebElement sideBar;
+    @FindBy(how = How.CLASS_NAME, using = "burger") private WebElement burgerMenu;
+    @FindBy(how = How.XPATH, using = "//span[contains(text(), 'Create Bucket')]") private WebElement createBucketButton;
+    @FindBy(how = How.ID, using = "dropdown-menu-align-end") private WebElement userMenuDropdown;
+    @FindBy(how = How.XPATH, using = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
+
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-//    public final By adminPanelDropdown = By.xpath("//button[@class='btn admin mr-2']//*[name()='svg']");
-//    public final By userProfileDropdown = By.id("dropdown-menu-align-end");
-//    public final By burgerSideBar = By.xpath("//div[@class='burger']//*[name()='svg']");
-
-    public static WebElement adminPanelDropdown(WebDriver driver) {
-        element = driver.findElement(By.xpath("//button[@class='btn admin mr-2']//*[name()='svg']"));
-        return element;
+    public ProfilePage goToProfilePage() {
+        userMenuDropdown.click();
+        yourProfileListItem.click();
+        return new ProfilePage(driver);
     }
 
-    public static WebElement userProfileDropdown(WebDriver driver) {
-        element = driver.findElement(By.id("dropdown-menu-align-end"));
-        return element;
+    @Override
+    protected void load() {
+        driver.get(URL);
     }
 
-    public static WebElement burgerSideBar(WebDriver driver) {
-        element = driver.findElement(By.xpath("//div[@class='burger']//*[name()='svg']"));
-        return element;
+    @Override
+    protected void isLoaded() throws Error {
+        assertEquals(driver.getCurrentUrl(), URL);
     }
-
-//    public static WebElement ddown(WebDriver driver) {
-//        select = driver.findElement(By.id("dropdown-menu-align-end"));
-//        return select = new Select(ddown);
-//    }
-
-//    WebElement userDropDown = driver.findElement(By.id("dropdown-menu-align-end"));
-//    Select select = new Select(userDropDown);
-
 }
