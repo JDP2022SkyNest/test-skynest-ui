@@ -10,8 +10,8 @@ import org.testng.annotations.BeforeSuite;
 @Slf4j
 public class TestSetup {
     protected WebDriver driver;
-    protected String email;
-    protected String password;
+    protected static String email;
+    protected static String password;
 
     @BeforeSuite
     public void globalSetup() {
@@ -23,10 +23,6 @@ public class TestSetup {
     @BeforeMethod
     public void setupWebDriver() {
         driver = getSupportedBrowser();
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
     }
 
     private static WebDriver getSupportedBrowser() {

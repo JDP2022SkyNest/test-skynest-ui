@@ -7,18 +7,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 import static org.testng.Assert.assertTrue;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
     private final WebDriver driver;
+    private final PageActions pageActions;
 
-    public static final String BASE_URL = ConfigurationManager.getBrowserConfigInstance().baseUrl();
-    public static final String URL = BASE_URL + "/login";
+    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/login";
 
     @FindBy(how = How.ID, using = "emailInput") private WebElement emailField;
     @FindBy(how = How.ID, using = "passwordInput") private WebElement passwordField;
@@ -28,14 +25,13 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        pageActions = new PageActions(driver);
     }
 
     public HomePage loginAs(String email, String password) {
         setEmail(email);
         setPassword(password);
         submitButton.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        wait.until(arg -> !driver.getCurrentUrl().equals(URL));
         return new HomePage(driver);
     }
 
@@ -44,14 +40,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         return new RegistrationPage(driver);
     }
 
+    public boolean isFormDisplayed() {
+        return emailField.isDisplayed() && passwordField.isDisplayed() && submitButton.isDisplayed();
+    }
+
     private void setEmail(String email) {
-        emailField.clear();
-        emailField.sendKeys(email);
+        pageActions.clearAndType(emailField, email);
     }
 
     private void setPassword(String password) {
-        passwordField.clear();
-        passwordField.sendKeys(password);
+        pageActions.clearAndType(passwordField, password);
     }
 
     @Override
@@ -62,7 +60,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     @Override
     protected void isLoaded() throws Error {
         assertTrue(driver.getCurrentUrl().contains("/login"));
-        emailField.isDisplayed();
-        passwordField.isDisplayed();
+        assertTrue(isFormDisplayed());
     }
 }

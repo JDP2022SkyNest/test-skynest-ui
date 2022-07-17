@@ -1,7 +1,8 @@
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends TestSetup {
 
@@ -9,10 +10,10 @@ public class LoginTest extends TestSetup {
     public void valid_login_should_take_to_home_page() {
         // ACT
         LoginPage loginPage = new LoginPage(driver).get();
-        loginPage.loginAs(email, password);
+        HomePage homePage = loginPage.loginAs(email, password);
 
         // ASSERT
-        Assert.assertEquals(getCurrentUrl(), HomePage.URL);
+        assertTrue(homePage.isCorrectlyDisplayed());
     }
 }
 
