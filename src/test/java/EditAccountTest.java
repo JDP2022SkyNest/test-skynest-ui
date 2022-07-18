@@ -2,6 +2,7 @@ import com.skynest.uitesting.models.User;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.ProfilePage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class EditAccountTest extends TestSetup {
@@ -15,8 +16,10 @@ public class EditAccountTest extends TestSetup {
 
         // ACT
         ProfilePage profilePage = homePage.goToProfilePage();
+        profilePage.selectUserOptions();
         profilePage.editInfoTo(newUserInfo);
 
         // ASSERT
+        //Assert.assertNotEquals();
     }
 }

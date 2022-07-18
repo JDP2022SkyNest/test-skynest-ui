@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ProfilePage {
 
@@ -13,7 +16,10 @@ public class ProfilePage {
 
     private static final String INPUT_FORM_PREFIX = "(//input[@type= 'text'])";
 
-    @FindBy(how = How.XPATH, using = "//button[(text() = 'Edit')]") private WebElement editButton;
+    @FindBy(how = How.XPATH, using = "//button[@id='dropdown-menu-align-end']") private WebElement userDropDown;
+    @FindBy(how = How.XPATH, using = "//body/div[@id='root']/div[1]/nav[1]/div[1]/div[2]/div[1]/div[1]/div[1]/a[1]") private WebElement yourProfile;
+
+    @FindBy(how = How.XPATH, using = "//button[contains(text(),'Edit')]") private WebElement editButton;
     @FindBy(how = How.XPATH, using = "//button[(text() = 'Logout')]") private WebElement logoutButton;
     @FindBy(how = How.XPATH, using = "//button[contains(text(), 'back')]") private WebElement goBackButton;
     @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[1]") private WebElement firstNameField;
@@ -29,7 +35,14 @@ public class ProfilePage {
         PageFactory.initElements(driver, this);
     }
 
+    public void  selectUserOptions() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        userDropDown.click();
+        yourProfile.click();
+    }
+
     public ProfilePage editInfoTo(User updatedUser) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         editButton.click();
         clearAndType(firstNameField, updatedUser.getFirstName());
         clearAndType(lastNameField, updatedUser.getLastName());
@@ -49,5 +62,4 @@ public class ProfilePage {
         element.clear();
         element.sendKeys(text);
     }
-
 }

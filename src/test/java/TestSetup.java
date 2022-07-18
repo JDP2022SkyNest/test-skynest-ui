@@ -7,6 +7,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 public class TestSetup {
     protected WebDriver driver;
@@ -23,6 +25,7 @@ public class TestSetup {
     @BeforeMethod
     public void setupWebDriver() {
         driver = getSupportedBrowser();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public String getCurrentUrl() {

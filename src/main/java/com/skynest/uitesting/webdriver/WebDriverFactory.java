@@ -25,20 +25,22 @@ public enum WebDriverFactory {
                     .addArguments(DISABLE_INFOBARS)
                     .addArguments(DISABLE_NOTIFICATIONS);
         }
-    }, FIREFOX {
-        @Override
-        public WebDriver createDriver() {
-            WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
-            return new FirefoxDriver(getOptions());
-        }
-
-        @Override
-        public FirefoxOptions getOptions() {
-            return new FirefoxOptions()
-                    .addArguments(FULL_HD_MAX_WIDTH)
-                    .addArguments(FULL_HD_MAX_HEIGHT);
-        }
     };
+//    ,
+//    FIREFOX {
+//        @Override
+//        public WebDriver createDriver() {
+//            WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
+//            return new FirefoxDriver(getOptions());
+//        }
+//
+//        @Override
+//        public FirefoxOptions getOptions() {
+//            return new FirefoxOptions()
+//                    .addArguments(FULL_HD_MAX_WIDTH)
+//                    .addArguments(FULL_HD_MAX_HEIGHT);
+//        }
+//    };
 
     private static final String START_MAXIMIZED = "--start-maximized";
     private static final String DISABLE_NOTIFICATIONS = "--disable-notifications";
