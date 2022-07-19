@@ -18,11 +18,11 @@ public class HomePage extends LoadableComponent<HomePage> {
     private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
     private static final String USER_DROPDOWN_MENU_LOCATOR = "//div[@class = 'dropdown-menu-admin']";
 
-    @FindBy(how = How.CLASS_NAME, using = "side-bar") private WebElement sideBar;
-    @FindBy(how = How.CLASS_NAME, using = "burger") private WebElement burgerMenu;
-    @FindBy(how = How.XPATH, using = "//span[contains(text(), 'Create Bucket')]") private WebElement createBucketButton;
-    @FindBy(how = How.ID, using = "dropdown-menu-align-end") private WebElement userMenuDropdown;
-    @FindBy(how = How.XPATH, using = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
+    @FindBy(className = "side-bar") private WebElement sideBar;
+    @FindBy(className = "burger") private WebElement burgerMenu;
+    @FindBy(xpath = "//span[contains(text(), 'Create Bucket')]") private WebElement createBucketButton;
+    @FindBy(id = "dropdown-menu-align-end") private WebElement userMenuDropdown;
+    @FindBy(xpath = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;

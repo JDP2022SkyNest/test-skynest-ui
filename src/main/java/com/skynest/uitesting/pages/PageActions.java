@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Wait;
 import java.time.Duration;
 
 @AllArgsConstructor
-public class PageActions {
+class PageActions {
 
     private final WebDriver driver;
 

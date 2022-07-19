@@ -14,16 +14,16 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
 
     private final WebDriver driver;
 
-    @FindBy(how = How.XPATH, using = "//form") private WebElement registrationForm;
-    @FindBy(how = How.ID, using = "firstNameInput") private WebElement firstNameField;
-    @FindBy(how = How.ID, using = "lastNameInput") private WebElement lastNameField;
-    @FindBy(how = How.ID, using = "emailInput") private WebElement emailField;
-    @FindBy(how = How.ID, using = "phoneInput") private WebElement phoneNumberField;
-    @FindBy(how = How.ID, using = "addressInput") private WebElement homeAddressField;
-    @FindBy(how = How.ID, using = "passwordInput") private WebElement passwordField;
-    @FindBy(how = How.ID, using = "confPasswordInput") private WebElement confirmPasswordField;
-    @FindBy(how = How.XPATH, using = "//button[text() = 'REGISTER']") private WebElement registerButton;
-    @FindBy(how = How.XPATH, using = "//a[@href = '/login']") private WebElement loginLink;
+    @FindBy(xpath = "//form") private WebElement registrationForm;
+    @FindBy(id = "firstNameInput") private WebElement firstNameField;
+    @FindBy(id = "lastNameInput") private WebElement lastNameField;
+    @FindBy(id = "emailInput") private WebElement emailField;
+    @FindBy(id = "phoneInput") private WebElement phoneNumberField;
+    @FindBy(id = "addressInput") private WebElement homeAddressField;
+    @FindBy(id = "passwordInput") private WebElement passwordField;
+    @FindBy(id = "confPasswordInput") private WebElement confirmPasswordField;
+    @FindBy(xpath = "//button[text() = 'REGISTER']") private WebElement registerButton;
+    @FindBy(xpath = "//a[@href = '/login']") private WebElement loginLink;
 
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;

@@ -19,16 +19,16 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
     private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/user-info";
     private static final String INPUT_FORM_PREFIX = "(//input[@type= 'text'])";
 
-    @FindBy(how = How.XPATH, using = "//button[(text() = 'Edit')]") private WebElement editButton;
-    @FindBy(how = How.XPATH, using = "//button[(text() = 'Logout')]") private WebElement logoutButton;
-    @FindBy(how = How.XPATH, using = "//button[contains(text(), 'back')]") private WebElement goBackButton;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[1]") private WebElement firstNameField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[2]") private WebElement lastNameField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[3]") private WebElement emailField;
-    @FindBy(how = How.XPATH, using = "//input[@type= 'number'][1]") private WebElement phoneNumberField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[4]") private WebElement positionField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[5]") private WebElement addressField;
-    @FindBy(how = How.XPATH, using = "//button[text() = 'Update']") private WebElement updateButton;
+    @FindBy(xpath = "//button[(text() = 'Edit')]") private WebElement editButton;
+    @FindBy(xpath = "//button[(text() = 'Logout')]") private WebElement logoutButton;
+    @FindBy(xpath = "//button[contains(text(), 'back')]") private WebElement goBackButton;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[1]") private WebElement firstNameField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[2]") private WebElement lastNameField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[3]") private WebElement emailField;
+    @FindBy(xpath = "//input[@type= 'number'][1]") private WebElement phoneNumberField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[4]") private WebElement positionField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[5]") private WebElement addressField;
+    @FindBy(xpath = "//button[text() = 'Update']") private WebElement updateButton;
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;
@@ -49,6 +49,10 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
         return this;
     }
 
+    // logout
+
+    // go back
+
     public boolean isDisplayedCorrectly() {
         return editButton.isDisplayed() && logoutButton.isDisplayed() && goBackButton.isDisplayed();
     }
@@ -63,9 +67,4 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
         assertTrue(driver.getCurrentUrl().equalsIgnoreCase(URL));
         assertTrue(isDisplayedCorrectly());
     }
-
-    // logout
-
-    // go back
-
 }
