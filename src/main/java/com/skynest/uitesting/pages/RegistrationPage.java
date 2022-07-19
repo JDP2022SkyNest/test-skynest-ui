@@ -41,7 +41,7 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         return new LoginPage(driver);
     }
 
-    private void fillFormWith(com.skynest.uitesting.models.User userDetails) {
+    private void fillFormWith(User userDetails) {
         clearAndType(firstNameField, userDetails.getFirstName());
         clearAndType(lastNameField, userDetails.getLastName());
         clearAndType(emailField, userDetails.getEmailAddress());

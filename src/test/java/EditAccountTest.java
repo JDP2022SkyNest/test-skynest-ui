@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class EditAccountTest extends TestSetup {
 
     @Test
-    public void user_should_be_able_to_edit_his_account_info_with_valid_details() throws InterruptedException {
+    public void user_should_be_able_to_edit_his_account_info_with_valid_details() {
         // ARRANGE
         User newUserInfo = User.generateValidUser();
         LoginPage loginPage = new LoginPage(driver).get();
