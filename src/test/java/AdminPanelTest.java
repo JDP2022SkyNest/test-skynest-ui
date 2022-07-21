@@ -1,6 +1,7 @@
 import com.skynest.uitesting.pages.AdminPanelPage;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class AdminPanelTest extends TestSetup{
@@ -13,9 +14,9 @@ public class AdminPanelTest extends TestSetup{
 
         // ACT
         AdminPanelPage adminPanelPage = homePage.goToAdminPanelPage();
-        adminPanelPage.promoteUser();
+        adminPanelPage.promoteFirstUser();
 
         // ASSERT
-
+        Assert.assertTrue(adminPanelPage.promoteUserButton.isEnabled());
     }
 }

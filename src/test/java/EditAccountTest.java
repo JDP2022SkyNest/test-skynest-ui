@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class EditAccountTest extends TestSetup {
 
     @Test
-    public void user_should_be_able_to_edit_his_account_info_with_valid_details() {
+    public void user_should_be_able_to_edit_his_account_info_with_valid_details() throws InterruptedException {
         // ARRANGE
         User newUserInfo = User.generateValidUser();
         LoginPage loginPage = new LoginPage(driver).get();
@@ -16,10 +16,9 @@ public class EditAccountTest extends TestSetup {
 
         // ACT
         ProfilePage profilePage = homePage.goToProfilePage();
-        profilePage.selectUserOptions();
         profilePage.editInfoTo(newUserInfo);
 
         // ASSERT
-        //Assert.assertNotEquals();
+        //Assert.assertEquals(true, );
     }
 }

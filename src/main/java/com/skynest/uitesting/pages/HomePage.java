@@ -9,31 +9,34 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class HomePage extends LoadableComponent<HomePage> {
 
     private final WebDriver driver;
+    private final PageActions pageActions;
 
-    public static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
+    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
     private static final String USER_DROPDOWN_MENU_LOCATOR = "//div[@class = 'dropdown-menu-admin']";
-
-    private static final String ADMIN_PANEL_LOCATOR = "//body/div[@id='root']/div[1]/nav[1]/div[1]/div[2]/button[1]/*[1]";
-
-    @FindBy(how = How.XPATH, using = "//body/div[@id='root']/div[1]/nav[1]/div[1]/div[2]/button[1]/*[1]") private WebElement adminPanelButton;
 
     @FindBy(how = How.CLASS_NAME, using = "side-bar") private WebElement sideBar;
     @FindBy(how = How.CLASS_NAME, using = "burger") private WebElement burgerMenu;
-    @FindBy(how = How.XPATH, using = "//span[@class='ml-1 latte-background custom-rounded']//*[name()='svg']") private WebElement createBucketButton;
+    @FindBy(xpath = "//span[@class='ml-1 latte-background custom-rounded shadow']//*[name()='svg']") private WebElement createBucketButton;
 
+    @FindBy(xpath = "//button[@class='btn admin mr-2']//*[name()='svg']") private WebElement adminPanelButton;
     @FindBy(how = How.ID, using = "dropdown-menu-align-end") private WebElement userMenuDropdown;
     @FindBy(how = How.XPATH, using = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
+
     @FindBy(how = How.XPATH, using = "//input[@id='nameInp']") private WebElement inputNameCreateBucket;
     @FindBy(how = How.XPATH, using = "//input[@id='descrInp']") private WebElement inputDescriptionCreateBucket;
     @FindBy(how = How.XPATH, using = "//button[contains(text(),'Create')]") private WebElement createBucketModalButton;
+    @FindBy(xpath = "//button[@id='react-aria346585100-87']//*[name()='svg']") private WebElement bucketElipsisButton;
+    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]") private WebElement bucket3;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        pageActions = new PageActions(driver);
     }
 
     public ProfilePage goToProfilePage() {
@@ -47,21 +50,21 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new AdminPanelPage(driver);
     }
 
-    @Override
-    protected void load() {
-        driver.get(URL);
+    public BucketPage goToBucket() throws InterruptedException {
+        bucket3.click();
+        return new BucketPage(driver);
     }
 
-    @Override
-    protected void isLoaded() throws Error {
-        assertEquals(driver.getCurrentUrl(), URL);
+    public boolean isCorrectlyDisplayed() {
+        boolean isSideMenuDisplayed = sideBar.isDisplayed();
+        boolean isCreateBucketDisplayed = createBucketButton.isDisplayed();
+        boolean isUserMenuDisplayed = userMenuDropdown.isDisplayed();
+        return isSideMenuDisplayed && isCreateBucketDisplayed && isUserMenuDisplayed;
     }
 
-    public void clickAndCreateBucket() {
+    public void createBucket() {
+        pageActions.waitPersistentlyForElementToAppear(createBucketButton, 5);
         createBucketButton.click();
-    }
-
-    public void fillCreatingBucketModal() {
         clearAndType(inputNameCreateBucket, "New Buccccket");
         clearAndType(inputDescriptionCreateBucket, "Description");
         createBucketModalButton.click();
@@ -70,5 +73,16 @@ public class HomePage extends LoadableComponent<HomePage> {
     private void clearAndType(WebElement element, String text) {
         element.clear();
         element.sendKeys(text);
+    }
+
+    @Override
+    protected void load() {
+        driver.get(URL);
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        assertEquals(driver.getCurrentUrl(), URL);
+        assertTrue(isCorrectlyDisplayed());
     }
 }

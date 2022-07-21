@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class TestSetup {
     protected WebDriver driver;
-    protected String email;
-    protected String password;
+    protected static String email;
+    protected static String password;
 
     @BeforeSuite
     public void globalSetup() {
@@ -26,10 +26,6 @@ public class TestSetup {
     public void setupWebDriver() {
         driver = getSupportedBrowser();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
     }
 
     private static WebDriver getSupportedBrowser() {

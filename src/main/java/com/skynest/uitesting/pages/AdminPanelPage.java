@@ -14,28 +14,39 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
 
     private final WebDriver driver;
 
+    private final PageActions pageActions;
+
     public static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
 
     @FindBy(how = How.XPATH, using = "//div[@class='shadow accordion']//div[1]//h2[1]//button[1]")
     private WebElement firstUserDropDown;
     @FindBy(how = How.XPATH, using = "//body/div[@id='root']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]")
-    private WebElement promoteUserButton;
+    public WebElement promoteUserButton;
+
+    @FindBy(linkText = "Demote") private WebElement demoteButton;
 
     public AdminPanelPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        pageActions = new PageActions(driver);
+    }
+
+    public void promoteFirstUser() throws InterruptedException {
+        //pageActions.waitPersistentlyForElementToAppear(firstUserDropDown, 5);
+        firstUserDropDown.click();
+        if (promoteUserButton.isDisplayed()) {
+            promoteUserButton.click();
+        } else demoteButton.click();
+        promoteUserButton.click();
     }
 
     @Override
-    protected void load() {driver.get(URL);}
+    protected void load() {
+        driver.get(URL);
+    }
 
     @Override
     protected void isLoaded() throws Error {
         assertEquals(driver.getCurrentUrl(), URL);
-    }
-
-    public void promoteUser() throws InterruptedException {
-        firstUserDropDown.click();
-        promoteUserButton.click();
     }
 }
