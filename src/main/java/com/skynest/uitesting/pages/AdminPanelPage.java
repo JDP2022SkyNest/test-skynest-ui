@@ -1,8 +1,7 @@
 package com.skynest.uitesting.pages;
 
 import com.skynest.uitesting.config.ConfigurationManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -23,6 +22,8 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
     @FindBy(how = How.XPATH, using = "//body/div[@id='root']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]")
     public WebElement promoteUserButton;
 
+    @FindBy(xpath = "//h1[contains(text(),’ Promote’)]") private WebElement promoteButton;
+
     @FindBy(linkText = "Demote") private WebElement demoteButton;
 
     public AdminPanelPage(WebDriver driver) {
@@ -34,10 +35,19 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
     public void promoteFirstUser() throws InterruptedException {
         //pageActions.waitPersistentlyForElementToAppear(firstUserDropDown, 5);
         firstUserDropDown.click();
-        if (promoteUserButton.isDisplayed()) {
-            promoteUserButton.click();
-        } else demoteButton.click();
-        promoteUserButton.click();
+//        if (promoteUserButton.isDisplayed()) {
+//            promoteUserButton.click();
+//        } else demoteButton.click();
+//        promoteUserButton.click();
+        try {
+            promoteButton.click();
+        }
+        catch (WebDriverException e) {
+            System.out.println("Exception case");
+        }
+//        catch (TimeoutException e) {
+//
+//        }
     }
 
     @Override
