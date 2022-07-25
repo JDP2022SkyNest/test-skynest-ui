@@ -17,6 +17,6 @@ public class AdminPanelTest extends TestSetup{
         adminPanelPage.promoteFirstUser();
 
         // ASSERT
-        Assert.assertTrue(adminPanelPage.promoteUserButton.isEnabled());
+        Assert.assertTrue(adminPanelPage.promoteUserButton.isDisplayed());
     }
 }

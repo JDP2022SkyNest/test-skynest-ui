@@ -16,10 +16,11 @@ public class UpLoadFileTest extends TestSetup{
 
         // ACT
         BucketPage bucketPage = homePage.goToBucket();
-        bucketPage.upLoadFileToBucket(desiredFileName);
+        bucketPage.upLoadFileToBucket();
+        //bucketPage.upLoadFileToBucket(desiredFileName);
 
         // ASSERT
-        Assert.assertTrue(bucketPage.isPresentByFileName(desiredFileName));
-
+        //Assert.assertTrue(bucketPage.isPresentByFileName(desiredFileName));
+        Assert.assertTrue(homePage.isAlertPresent());
     }
 }

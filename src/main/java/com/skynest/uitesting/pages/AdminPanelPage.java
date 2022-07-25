@@ -12,17 +12,13 @@ import static org.testng.Assert.assertEquals;
 public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
 
     private final WebDriver driver;
-
     private final PageActions pageActions;
-
     public static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
-
-    @FindBy(how = How.XPATH, using = "//div[@class='shadow accordion']//div[1]//h2[1]//button[1]")
-    private WebElement firstUserDropDown;
-    @FindBy(how = How.XPATH, using = "//body/div[@id='root']/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]")
+    @FindBy(how = How.XPATH, using = "//div[@class='shadow accordion']//div[1]//h2[1]//button[1]") private WebElement firstUserDropDown;
+    @FindBy(css = "div.admin-page-body div.container div.row:nth-child(5) div.col-12.col-lg-8.offset-lg-2 div.shadow.accordion div.false.accordion-item:nth-child(1) div.accordion-collapse.collapse.show div.accordion-body div.d-flex.justify-content-between.mt-3:nth-child(5) div:nth-child(1) > button.btn.btn-secondary.button-width:nth-child(1)")
     public WebElement promoteUserButton;
 
-    @FindBy(xpath = "//h1[contains(text(),’ Promote’)]") private WebElement promoteButton;
+    @FindBy(css = "div.admin-page-body div.container div.row:nth-child(5) div.col-12.col-lg-8.offset-lg-2 div.shadow.accordion div.false.accordion-item:nth-child(1) div.accordion-collapse.collapse.show div.accordion-body div.d-flex.justify-content-between.mt-3:nth-child(5) div:nth-child(1) > button.btn.btn-secondary.button-width:nth-child(1)") private WebElement promoteButton;
 
     @FindBy(linkText = "Demote") private WebElement demoteButton;
 
@@ -32,22 +28,10 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
         pageActions = new PageActions(driver);
     }
 
-    public void promoteFirstUser() throws InterruptedException {
+    public void promoteFirstUser() {
         //pageActions.waitPersistentlyForElementToAppear(firstUserDropDown, 5);
         firstUserDropDown.click();
-//        if (promoteUserButton.isDisplayed()) {
-//            promoteUserButton.click();
-//        } else demoteButton.click();
-//        promoteUserButton.click();
-        try {
-            promoteButton.click();
-        }
-        catch (WebDriverException e) {
-            System.out.println("Exception case");
-        }
-//        catch (TimeoutException e) {
-//
-//        }
+        promoteButton.click();
     }
 
     @Override

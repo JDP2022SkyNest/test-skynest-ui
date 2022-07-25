@@ -1,6 +1,7 @@
 import com.skynest.uitesting.pages.BucketPage;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class DownloadFileTest extends TestSetup {
@@ -16,5 +17,6 @@ public class DownloadFileTest extends TestSetup {
         bucketPage.downloadFile();
 
         // ASSERT
+        Assert.assertTrue(homePage.isAlertPresent());
     }
 }

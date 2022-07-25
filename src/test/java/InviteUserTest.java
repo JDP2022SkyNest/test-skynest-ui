@@ -1,5 +1,6 @@
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class InviteUserTest extends TestSetup{
@@ -14,6 +15,6 @@ public class InviteUserTest extends TestSetup{
         homePage.sendEmailToInviteUser();
 
         // ASSERT
-
+        Assert.assertTrue(homePage.isAlertPresent());
     }
 }

@@ -3,18 +3,18 @@ import com.skynest.uitesting.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class BucketsTest extends TestSetup{
+public class DeleteBucketTest extends TestSetup{
 
     @Test
-    public void create_bucket() throws InterruptedException {
+    public void delete_bucket() {
         // ARRANGE
         LoginPage loginPage = new LoginPage(driver).get();
         HomePage homePage = loginPage.loginAs(email, password);
 
         // ACT
-        homePage.createBucket();
+        homePage.deleteBucket();
 
         // ASSERT
-        Assert.assertTrue(homePage.createBucketModalButton.isDisplayed());
+        Assert.assertTrue(homePage.isAlertPresent());
     }
 }

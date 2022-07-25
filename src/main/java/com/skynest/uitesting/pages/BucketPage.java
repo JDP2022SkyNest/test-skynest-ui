@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class BucketPage extends LoadableComponent<BucketPage> {
 
@@ -21,8 +20,8 @@ public class BucketPage extends LoadableComponent<BucketPage> {
     private final PageActions pageActions;
     private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
 
-    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/div[1]/button[1]/*[1]") private WebElement fileElipsisButton;
-    @FindBy(xpath = "//a[normalize-space()='Download File']") private WebElement downloadFileOption;
+    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/div[1]/div[2]/div[1]/button[1]/*[1]") private WebElement fileElipsisButton;
+    @FindBy(xpath = "//a[contains(text(),'Download File')]") private WebElement downloadFileOption;
     @FindBy(xpath = "//body/div[@id='root']/div[1]/div[1]/div[1]/div[1]/span[1]") private WebElement uploadFile;
     @FindBy(xpath = "//input[@id='formFile']") private WebElement chooseUploadFileInModal;
     @FindBy(xpath = "//button[normalize-space()='Upload']") private WebElement uploadButtonInModal;
@@ -35,6 +34,7 @@ public class BucketPage extends LoadableComponent<BucketPage> {
     }
 
     public void downloadFile() {
+        pageActions.waitPersistentlyForElementToAppear(fileElipsisButton, 5);
         fileElipsisButton.click();
         downloadFileOption.click();
     }
@@ -43,6 +43,14 @@ public class BucketPage extends LoadableComponent<BucketPage> {
         uploadFile.click();
         createFile(name);
         chooseUploadFileInModal.sendKeys("C:\\Users\\Nemanja\\Downloads\\" + name + ".txt");
+        uploadButtonInModal.click();
+    }
+
+    public void upLoadFileToBucket() {
+        uploadFile.click();
+        //createFile(name);
+        //chooseUploadFileInModal.sendKeys("C:\\Users\\Nemanja\\Downloads\\" + name + ".txt");
+        chooseUploadFileInModal.sendKeys("C:\\Users\\Nemanja\\Downloads\\slika.txt");
         uploadButtonInModal.click();
     }
 

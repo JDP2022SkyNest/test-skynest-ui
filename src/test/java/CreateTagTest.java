@@ -2,6 +2,7 @@ import com.skynest.uitesting.models.User;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.ProfilePage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CreateTagTest extends TestSetup{
@@ -16,6 +17,6 @@ public class CreateTagTest extends TestSetup{
         homePage.createTag();
 
         // ASSERT
-
+        Assert.assertTrue(homePage.isAlertPresent());
     }
 }
