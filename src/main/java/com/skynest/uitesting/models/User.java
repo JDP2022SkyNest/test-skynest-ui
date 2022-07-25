@@ -28,6 +28,7 @@ public class User {
         String randomPhoneNumber = faker.phoneNumber().phoneNumber()
                 .replace("-", "")
                 .replace("\\.", "");
+
         return User.builder()
                 .firstName(faker.name().firstName())
                 .lastName(faker.name().lastName())

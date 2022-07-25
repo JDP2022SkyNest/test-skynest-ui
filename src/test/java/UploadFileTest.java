@@ -4,7 +4,7 @@ import com.skynest.uitesting.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class UpLoadFileTest extends TestSetup{
+public class UploadFileTest extends TestSetup  {
 
     @Test
     public void upload_file_from_folder() throws InterruptedException {
@@ -13,13 +13,13 @@ public class UpLoadFileTest extends TestSetup{
 
         LoginPage loginPage = new LoginPage(driver).get();
         HomePage homePage = loginPage.loginAs(email, password);
+//        homePage.createABucket();
 
         // ACT
         BucketPage bucketPage = homePage.goToBucket();
-        bucketPage.upLoadFileToBucket(desiredFileName);
+        bucketPage.uploadAFileToBucket(desiredFileName);
 
         // ASSERT
-        Assert.assertTrue(bucketPage.isPresentByFileName(desiredFileName));
-
+        Assert.assertTrue(bucketPage.isFilePresent(desiredFileName));
     }
 }
