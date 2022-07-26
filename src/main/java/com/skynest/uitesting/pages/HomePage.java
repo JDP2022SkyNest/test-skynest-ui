@@ -1,49 +1,38 @@
 package com.skynest.uitesting.pages;
 
 import com.skynest.uitesting.config.ConfigurationManager;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Slf4j
 public class HomePage extends LoadableComponent<HomePage> {
 
     private final WebDriver driver;
     private final PageActions pageActions;
-    String usersEmail = "nemanja.mihajlovic@htecgroup.com";
-    String tagName = "MYTAG";
+
     private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
     private static final String USER_DROPDOWN_MENU_LOCATOR = "//div[@class = 'dropdown-menu-admin']";
 
-    @FindBy(css = ".ml-1.mr-2.mr-sm-0.latte-background.custom-rounded.shadow") private WebElement createBucketButton;
+    @FindBy(className = "side-bar") private WebElement sideBar;
+    @FindBy(className = "burger") private WebElement burgerMenu;
+    @FindBy(xpath = "//span[contains(text(), 'Create')]") private WebElement createBucketButton;
     @FindBy(xpath = "//button[@class='btn admin mr-2']//*[name()='svg']") private WebElement adminPanelButton;
-    @FindBy(how = How.ID, using = "dropdown-menu-align-end") private WebElement userMenuDropdown;
-    @FindBy(how = How.XPATH, using = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
-    @FindBy(how = How.XPATH, using = "//input[@id='nameInp']") private WebElement inputNameCreateBucket;
-    @FindBy(how = How.XPATH, using = "//input[@id='descrInp']") private WebElement inputDescriptionCreateBucket;
-    @FindBy(how = How.XPATH, using = "//button[contains(text(),'Create')]") public WebElement createBucketModalButton;
+    @FindBy(id = "dropdown-menu-align-end") private WebElement userMenuDropdown;
+    @FindBy(xpath = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
     @FindBy(xpath = "//button[@id='react-aria346585100-87']//*[name()='svg']") private WebElement bucketElipsisButton;
-    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[1]/div[1]/div[2]/div[1]/div[24]/div[1]/div[1]") private WebElement bucketForDownload;
-    @FindBy(xpath = "//span[contains(text(),'Invite User')]") private WebElement inviteUserDropdownOption;
-    @FindBy(xpath = "//input[@id='emailInp']") private WebElement emailForInvitingUser;
-    @FindBy(xpath = "//button[contains(text(),'Invite')]") private WebElement inviteButton;
-    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[1]/div[1]/div[1]/span[2]") private WebElement createTagButton;
-    @FindBy(xpath = "//input[@id='nameInp']") private WebElement tagNameInputField;
-    @FindBy(xpath = "//button[contains(text(),'Create')]") private WebElement createTagModalButton;
-    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[1]/div[1]/div[2]/div[1]/div[5]/div[1]/div[2]/div[1]/button[1]/*[1]") private WebElement bucketOptions;
-    @FindBy(xpath = "//a[contains(text(),'Delete bucket')]") private WebElement deleteBucket;
+    @FindBy(xpath = "//body/div[@id='root']/div[1]/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]") private WebElement bucket3;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         pageActions = new PageActions(driver);
+        pageActions.waitPersistentlyForElementToAppear(createBucketButton, 5);
     }
 
     public ProfilePage goToProfilePage() {
@@ -57,10 +46,14 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new AdminPanelPage(driver);
     }
 
-    public BucketPage goToBucket() throws InterruptedException {
-        pageActions.waitPersistentlyForElementToAppear(bucketForDownload, 5);
-        bucketForDownload.click();
+    public BucketPage goToBucket() {
+        bucket3.click();
         return new BucketPage(driver);
+    }
+
+    public BucketModal openBucketCreationModal() {
+        createBucketButton.click();
+        return new BucketModal(driver);
     }
 
     public void sendEmailToInviteUser() {
@@ -97,18 +90,23 @@ public class HomePage extends LoadableComponent<HomePage> {
     }
 
     public boolean isCorrectlyDisplayed() {
+        boolean isSideMenuDisplayed = sideBar.isDisplayed();
         boolean isCreateBucketDisplayed = createBucketButton.isDisplayed();
         boolean isUserMenuDisplayed = userMenuDropdown.isDisplayed();
-        boolean isCreateTagButtonDisplayed = createTagButton.isDisplayed();
-        return isCreateBucketDisplayed && isUserMenuDisplayed && isCreateTagButtonDisplayed;
+        return isSideMenuDisplayed && isCreateBucketDisplayed && isUserMenuDisplayed;
     }
 
-    public void createBucket() {
-        //pageActions.waitPersistentlyForElementToAppear(createBucketButton, 5);
-        createBucketButton.click();
-        clearAndType(inputNameCreateBucket, "New Buccccket");
-        clearAndType(inputDescriptionCreateBucket, "Description");
-        createBucketModalButton.click();
+    public boolean hasBucket(Bucket bucket) {
+        By createdBucketNameDiv = concatenateCommonBucketBy(bucket.getName());
+        By createdBucketDescriptionDiv = concatenateCommonBucketBy(bucket.getDescription());
+        try {
+            pageActions.waitForElement(driver, createdBucketNameDiv, 5);
+            pageActions.waitForElement(driver, createdBucketDescriptionDiv, 1);
+            return true;
+        } catch (NoSuchElementException ex) {
+            log.error("Could not find created bucket element; {}", ex.getMessage());
+            return false;
+        }
     }
 
     public void displayMessage() {
@@ -118,6 +116,8 @@ public class HomePage extends LoadableComponent<HomePage> {
     private void clearAndType(WebElement element, String text) {
         element.clear();
         element.sendKeys(text);
+    private By concatenateCommonBucketBy(String bucketInfoPath) {
+        return By.xpath("//div[contains(text(), '" + bucketInfoPath + "')]");
     }
 
     @Override

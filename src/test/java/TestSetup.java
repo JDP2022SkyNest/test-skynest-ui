@@ -25,7 +25,6 @@ public class TestSetup {
     @BeforeMethod
     public void setupWebDriver() {
         driver = getSupportedBrowser();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     private static WebDriver getSupportedBrowser() {
@@ -40,8 +39,8 @@ public class TestSetup {
 
     @AfterMethod
     public void destroyWebDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
+//        if (driver != null) {
+//            driver.quit();
+//        }
     }
 }

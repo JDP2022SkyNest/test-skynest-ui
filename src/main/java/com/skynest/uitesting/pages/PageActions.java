@@ -1,6 +1,7 @@
 package com.skynest.uitesting.pages;
 
 import lombok.AllArgsConstructor;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,8 +24,17 @@ public class PageActions {
     public void waitPersistentlyForElementToAppear(WebElement element, int seconds) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(seconds))
-                .pollingEvery(Duration.ofSeconds(seconds))
+                .pollingEvery(Duration.ofSeconds(1))
                 .ignoring(NoSuchElementException.class);
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitForElement(WebDriver driver, final By locator, int seconds){
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(seconds))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class);
+
+        wait.until(driver1 -> driver1.findElement(locator));
     }
 }
