@@ -10,23 +10,21 @@ public class BucketModal {
 
     private final WebDriver driver;
     private final PageActions pageActions;
-    private final Bucket bucket;
 
-    @FindBy(xpath = "//input[@id='nameInp']") private WebElement bucketModalNameField;
-    @FindBy(xpath = "//input[@id='descrInp']") private WebElement bucketModalDescriptionField;
-    @FindBy(xpath = "//button[contains(text(),'Create')]") private WebElement bucketModalCreateButton;
+    @FindBy(xpath = "//input[@id='nameInp']") private WebElement nameField;
+    @FindBy(xpath = "//input[@id='descrInp']") private WebElement descriptionField;
+    @FindBy(xpath = "//button[contains(text(),'Create')]") private WebElement createButton;
 
-    public BucketModal(WebDriver driver, Bucket bucket) {
+    public BucketModal(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         pageActions = new PageActions(driver);
-        this.bucket = bucket;
     }
 
-    public HomePage submitBucketRequest() {
-        pageActions.clearAndType(bucketModalNameField, bucket.getName());
-        pageActions.clearAndType(bucketModalDescriptionField, bucket.getDescription());
-        bucketModalCreateButton.click();
+    public HomePage createBucket(Bucket bucket) {
+        pageActions.clearAndType(nameField, bucket.getName());
+        pageActions.clearAndType(descriptionField, bucket.getDescription());
+        createButton.click();
         return new HomePage(driver);
     }
 }

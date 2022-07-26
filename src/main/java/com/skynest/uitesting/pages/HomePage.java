@@ -55,18 +55,9 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new BucketPage(driver);
     }
 
-//    public HomePage createABucket() {
-//        Bucket randomBucket = Bucket.createRandomValidBucket();
-//        createBucketButton.click();
-//        pageActions.clearAndType(bucketModalNameField, randomBucket.getName());
-//        pageActions.clearAndType(bucketModalDescriptionField, randomBucket.getDescription());
-//        bucketModalCreateButton.click();
-//        return this;
-//    }
-
-    public BucketModal attemptBucketCreation(Bucket bucket) {
+    public BucketModal openBucketCreationModal() {
         createBucketButton.click();
-        return new BucketModal(driver, bucket);
+        return new BucketModal(driver);
     }
 
     public boolean isCorrectlyDisplayed() {
@@ -77,16 +68,20 @@ public class HomePage extends LoadableComponent<HomePage> {
     }
 
     public boolean hasBucket(Bucket bucket) {
-        By createdBucketNameDiv = By.xpath("//div[contains(text(), '" + bucket.getName() + "')]");
-        By createdBucketDescriptionDiv = By.xpath("//div[contains(text(), '" + bucket.getDescription() + "')]");
+        By createdBucketNameDiv = concatenateCommonBucketBy(bucket.getName());
+        By createdBucketDescriptionDiv = concatenateCommonBucketBy(bucket.getDescription());
         try {
             pageActions.waitForElement(driver, createdBucketNameDiv, 5);
             pageActions.waitForElement(driver, createdBucketDescriptionDiv, 1);
             return true;
         } catch (NoSuchElementException ex) {
             log.error("Could not find created bucket element; {}", ex.getMessage());
+            return false;
         }
-        return false;
+    }
+
+    private By concatenateCommonBucketBy(String bucketInfoPath) {
+        return By.xpath("//div[contains(text(), '" + bucketInfoPath + "')]");
     }
 
     @Override
