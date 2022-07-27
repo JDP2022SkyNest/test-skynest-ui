@@ -1,8 +1,9 @@
 package com.skynest.uitesting.pages;
 
 import com.skynest.uitesting.config.ConfigurationManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.skynest.uitesting.models.Bucket;
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -32,7 +33,7 @@ public class HomePage extends LoadableComponent<HomePage> {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         pageActions = new PageActions(driver);
-        pageActions.waitPersistentlyForElementToAppear(createBucketButton, 5);
+        pageActions.waitForElement(driver, By.className("card"), 5);
     }
 
     public ProfilePage goToProfilePage() {
@@ -58,16 +59,16 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     public void sendEmailToInviteUser() {
         userMenuDropdown.click();
-        inviteUserDropdownOption.click();
-        emailForInvitingUser.sendKeys(usersEmail);
-        inviteButton.click();
+//        inviteUserDropdownOption.click();
+//        emailForInvitingUser.sendKeys(usersEmail);
+//        inviteButton.click();
     }
 
     public void createTag() {
         //pageActions.waitPersistentlyForElementToAppear(createTagButton, 5);
-        createTagButton.click();
-        tagNameInputField.sendKeys(tagName);
-        createTagModalButton.click();
+//        createTagButton.click();
+//        tagNameInputField.sendKeys(tagName);
+//        createTagModalButton.click();
     }
 
     public boolean isAlertPresent() {
@@ -85,8 +86,8 @@ public class HomePage extends LoadableComponent<HomePage> {
     }
 
     public void deleteBucket() {
-        bucketOptions.click();
-        deleteBucket.click();
+//        bucketOptions.click();
+//        deleteBucket.click();
     }
 
     public boolean isCorrectlyDisplayed() {
@@ -113,9 +114,6 @@ public class HomePage extends LoadableComponent<HomePage> {
         driver.switchTo().alert().getText();
     }
 
-    private void clearAndType(WebElement element, String text) {
-        element.clear();
-        element.sendKeys(text);
     private By concatenateCommonBucketBy(String bucketInfoPath) {
         return By.xpath("//div[contains(text(), '" + bucketInfoPath + "')]");
     }
