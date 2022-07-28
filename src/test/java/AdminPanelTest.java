@@ -3,6 +3,8 @@ import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertTrue;
+
 public class AdminPanelTest extends TestSetup{
 
     @Test
@@ -12,9 +14,11 @@ public class AdminPanelTest extends TestSetup{
         HomePage homePage = loginPage.loginAs(email, password);
 
         // ACT
-        AdminPanelPage adminPanelPage = homePage.goToAdminPanelPage();
-        adminPanelPage.promoteSomeUserIfAny();
+        AdminPanelPage adminPanelPage = homePage
+                .goToAdminPanelPage()
+                .promoteSomeUserIfAny();
 
         // ASSERT
+        assertTrue(adminPanelPage.isSuccessMessageDisplayed());
     }
 }

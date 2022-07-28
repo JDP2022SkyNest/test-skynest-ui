@@ -5,12 +5,11 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 @AllArgsConstructor
-public class PageActions {
+class PageActions {
 
     private final WebDriver driver;
 
@@ -24,10 +23,11 @@ public class PageActions {
                 .withTimeout(Duration.ofSeconds(seconds))
                 .pollingEvery(Duration.ofSeconds(1))
                 .ignoring(NoSuchElementException.class);
+
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitForElement(WebDriver driver, final By locator, int seconds){
+    public void waitForElement(WebDriver driver, final By locator, int seconds) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(seconds))
                 .pollingEvery(Duration.ofSeconds(1))
@@ -37,13 +37,12 @@ public class PageActions {
     }
 
     public void scrollElementIntoView(WebElement element) {
+        int forcedExecutionTime = 1000;
         String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
                 + "var elementTop = arguments[0].getBoundingClientRect().top;"
-                + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
+                + "window.scrollBy(0, elementTop - (viewPortHeight / 2));";
 
         ((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
-        ((JavascriptExecutor) driver).executeAsyncScript("window.setTimeout(arguments[arguments.length - 1], 1000);");
+        ((JavascriptExecutor) driver).executeAsyncScript("window.setTimeout(arguments[arguments.length - 1], " + forcedExecutionTime + ");");
     }
-
-
 }
