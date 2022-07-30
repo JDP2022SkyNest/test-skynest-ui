@@ -2,16 +2,21 @@ import com.skynest.uitesting.models.Bucket;
 import com.skynest.uitesting.pages.BucketModal;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-public class BucketsTest extends TestSetup{
+public class BucketsTest extends TestSetup {
 
-    @Test
-    public void logged_user_can_create_a_bucket() {
+    private static final String VALID_BUCKET_PROVIDER = "validBucketProvider";
+
+    @Test(dataProvider = VALID_BUCKET_PROVIDER)
+    public void logged_user_can_create_a_bucket(Bucket desiredBucket) {
         // ARRANGE
-        Bucket desiredBucket = Bucket.createRandomValidBucket();
         LoginPage loginPage = new LoginPage(driver).get();
         HomePage homePage = loginPage.loginAs(email, password);
 
@@ -20,6 +25,28 @@ public class BucketsTest extends TestSetup{
         homePage = bucketModal.createBucket(desiredBucket);
 
         // ASSERT
-        assertTrue(homePage.hasBucket(desiredBucket), "Bucket is visible with correct details");
+        assertTrue(homePage.hasBucket(desiredBucket), "Bucket is not visible or has incorrect details");
+    }
+
+    @Test(dataProvider = VALID_BUCKET_PROVIDER)
+    public void logged_user_can_delete_bucket(Bucket desiredBucket) {
+        // ARRANGE
+        LoginPage loginPage = new LoginPage(driver).get();
+        HomePage homePage = loginPage.loginAs(email, password);
+        BucketModal bucketModal = homePage.openBucketCreationModal();
+        homePage = bucketModal.createBucket(desiredBucket);
+
+        // ACT
+        homePage.deleteBucket(desiredBucket);
+
+        // ASSERT
+        assertTrue(homePage.hasDisplayedMessage(), "No success feedback has been displayed");
+    }
+
+    @DataProvider(name = VALID_BUCKET_PROVIDER)
+    public Object[][] validBucketProvider() {
+        return new Object[][] {
+                { Bucket.createRandomValidBucket() }
+        };
     }
 }

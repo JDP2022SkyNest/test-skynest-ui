@@ -21,6 +21,6 @@ public class UploadFileTest extends TestSetup  {
         // ASSERT
         Assert.assertTrue(bucketPage.isFilePresent(desiredFileName));
         //Assert.assertTrue(bucketPage.isPresentByFileName(desiredFileName));
-        Assert.assertTrue(homePage.isAlertPresent());
+        // Assert.assertTrue(homePage.isAlertPresent());
     }
 }

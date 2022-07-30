@@ -2,9 +2,7 @@ package com.skynest.uitesting.pages;
 
 import lombok.AllArgsConstructor;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
