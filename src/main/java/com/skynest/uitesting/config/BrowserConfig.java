@@ -12,4 +12,8 @@ public interface BrowserConfig extends Config {
     @Key("baseUrl")
     @DefaultValue("http://13.94.241.83:3000")
     String baseUrl();
+
+    @Key("apiBaseUrl")
+    @DefaultValue("http://13.94.241.83:8080")
+    String apiBaseUrl();
 }

@@ -32,13 +32,11 @@ public class HomePage extends LoadableComponent<HomePage> {
     @FindBy(xpath = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
     @FindBy(css = BUCKET_DELETE_LINK) private WebElement bucketDeleteLink;
     @FindBy(xpath = "//p[contains(text(), 'Bucket Successfully Deleted')]") private WebElement bucketDeletedSuccessAlert;
-    @FindBy(xpath = "//button[@id='react-aria346585100-87']//*[name()='svg']") private WebElement bucketElipsisButton;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         pageActions = new PageActions(driver);
-        pageActions.waitForElement(driver, By.className("card"), 5);
     }
 
     public ProfilePage goToProfilePage() {
@@ -88,10 +86,9 @@ public class HomePage extends LoadableComponent<HomePage> {
     }
 
     public boolean isCorrectlyDisplayed() {
-        boolean isSideMenuDisplayed = sideBar.isDisplayed();
         boolean isCreateBucketDisplayed = createBucketButton.isDisplayed();
         boolean isUserMenuDisplayed = userMenuDropdown.isDisplayed();
-        return isSideMenuDisplayed && isCreateBucketDisplayed && isUserMenuDisplayed;
+        return isCreateBucketDisplayed && isUserMenuDisplayed;
     }
 
     public boolean hasBucket(Bucket bucket) {
@@ -109,11 +106,12 @@ public class HomePage extends LoadableComponent<HomePage> {
         return !alertMessage.isEmpty();
     }
 
-    public boolean hasDisplayedMessageTest() {
-        Wait<WebDriver> wait = new WebDriverWait<>();
-        driver.findElement(By.linkText("See an example alert")).click();
-        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-    }
+//    public boolean hasDisplayedMessageTest() {
+//        Wait<WebDriver> wait = new WebDriverWait<>();
+//        driver.findElement(By.linkText("See an example alert")).click();
+//        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+//        alert.dismiss();
+//    }
 
     public void displayMessage() {
         driver.switchTo().alert().getText();
@@ -131,6 +129,7 @@ public class HomePage extends LoadableComponent<HomePage> {
     @Override
     protected void isLoaded() throws Error {
         assertEquals(driver.getCurrentUrl(), URL);
+        pageActions.waitPersistentlyForElementToAppear(createBucketButton, 5);
         assertTrue(isCorrectlyDisplayed());
     }
 }

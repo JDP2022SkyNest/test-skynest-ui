@@ -18,9 +18,16 @@
         <projectlombok.version>1.18.24</projectlombok.version>
         <configuration.version>1.10</configuration.version>
         <owner.version>1.0.12</owner.version>
+        <restassured.version>5.1.1</restassured.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${restassured.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.aeonbits.owner</groupId>

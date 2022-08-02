@@ -1,5 +1,6 @@
 package com.skynest.uitesting.pages;
 
+import com.skynest.uitesting.api.User;
 import com.skynest.uitesting.config.ConfigurationManager;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
@@ -14,29 +15,33 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
 
     private final WebDriver driver;
     private final PageActions pageActions;
-    public static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/";
+    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/admin-panel";
 
-    @FindBy(linkText = "Demote") private WebElement demoteButton;
     private final By promoteButtonBy = By.cssSelector(".btn-secondary.button-width");
+    private static final String SINGLE_SEARCH_RESULT_ACCORDION = ".shadow.accordion";
+    private final By singleSearchResultAccordionBy = By.cssSelector(SINGLE_SEARCH_RESULT_ACCORDION);
+    @FindBy(xpath = "//input[@type ='text']") private WebElement searchField;
+    @FindBy(css = SINGLE_SEARCH_RESULT_ACCORDION) private WebElement singleSearchResultAccordion;
 
     public AdminPanelPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         pageActions = new PageActions(driver);
-        pageActions.waitForElement(driver, By.cssSelector(".shadow.accordion"), 3);
     }
 
-    public AdminPanelPage promoteSomeUserIfAny() {
-        if (areTherePromotableUsers()) {
-            String collapsedAncestorRowOfFoundPromoteButtonXpath = "//button[@class = 'btn btn-secondary button-width']//ancestor::div[5]";
-            WebElement foundPromoteButtonContainer = driver.findElement(By.xpath(collapsedAncestorRowOfFoundPromoteButtonXpath));
-            pageActions.scrollElementIntoView(foundPromoteButtonContainer);
-            foundPromoteButtonContainer.click();
-            WebElement promoteButton = driver.findElement(promoteButtonBy);
-            pageActions.waitPersistentlyForElementToAppear(promoteButton, 2);
-            pageActions.scrollElementIntoView(promoteButton);
-            promoteButton.click();
-        }
+    public AdminPanelPage searchAndPromoteUser(User user) {
+        searchUserByEmail(user);
+        singleSearchResultAccordion.click();
+        WebElement promoteButton = driver.findElement(promoteButtonBy);
+        pageActions.waitPersistentlyForElementToAppear(promoteButton, 2);
+        pageActions.scrollElementIntoView(promoteButton);
+        promoteButton.click();
+        return this;
+    }
+
+    public AdminPanelPage searchUserByEmail(User user) {
+        pageActions.clearAndType(searchField, user.getEmail());
+        pageActions.waitForElement(driver, singleSearchResultAccordionBy, 2);
         return this;
     }
 
@@ -51,16 +56,6 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
         }
     }
 
-    private boolean areTherePromotableUsers() {
-        try {
-            pageActions.waitForElement(driver, promoteButtonBy, 3);
-            return true;
-        } catch (NoSuchElementException ex) {
-            log.info("There are no users that can be promoted.");
-            return false;
-        }
-    }
-
     @Override
     protected void load() {
         driver.get(URL);
@@ -69,5 +64,6 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
     @Override
     protected void isLoaded() throws Error {
         assertEquals(driver.getCurrentUrl(), URL);
+        pageActions.waitForElement(driver, singleSearchResultAccordionBy, 3);
     }
 }
