@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.net.URISyntaxException;
+
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -15,10 +17,11 @@ public class BucketsTest extends TestSetup {
     private static final String VALID_BUCKET_PROVIDER = "validBucketProvider";
 
     @Test(dataProvider = VALID_BUCKET_PROVIDER)
-    public void logged_user_can_create_a_bucket(Bucket desiredBucket) {
+    public void logged_user_can_create_a_bucket(Bucket desiredBucket) throws URISyntaxException {
         // ARRANGE
-        LoginPage loginPage = new LoginPage(driver).get();
-        HomePage homePage = loginPage.loginAs(email, password);
+        new LoginPage(driver).get();
+        setBrowserAuthToken();
+        HomePage homePage = new HomePage(driver).get();
 
         // ACT
         BucketModal bucketModal = homePage.openBucketCreationModal();
@@ -29,10 +32,11 @@ public class BucketsTest extends TestSetup {
     }
 
     @Test(dataProvider = VALID_BUCKET_PROVIDER)
-    public void logged_user_can_delete_bucket(Bucket desiredBucket) {
+    public void logged_user_can_delete_bucket(Bucket desiredBucket) throws URISyntaxException {
         // ARRANGE
-        LoginPage loginPage = new LoginPage(driver).get();
-        HomePage homePage = loginPage.loginAs(email, password);
+        new LoginPage(driver).get();
+        setBrowserAuthToken();
+        HomePage homePage = new HomePage(driver).get();
         BucketModal bucketModal = homePage.openBucketCreationModal();
         homePage = bucketModal.createBucket(desiredBucket);
 

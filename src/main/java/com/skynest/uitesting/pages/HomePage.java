@@ -94,6 +94,7 @@ public class HomePage extends LoadableComponent<HomePage> {
     public boolean hasBucket(Bucket bucket) {
         By createdBucketNameDivBy = concatenateCommonBucketBy(bucket.getName());
         By createdBucketDescriptionDivBy = concatenateCommonBucketBy(bucket.getDescription());
+        pageActions.waitForElement(driver, createdBucketNameDivBy, 10);
         List<WebElement> createdBucketName = driver.findElements(createdBucketNameDivBy);
         List<WebElement> createdBucketDescription = driver.findElements(createdBucketDescriptionDivBy);
         return !createdBucketName.isEmpty() && !createdBucketDescription.isEmpty();
