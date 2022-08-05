@@ -1,5 +1,6 @@
 package com.skynest.uitesting.pages;
 
+import com.skynest.uitesting.api.BucketResponse;
 import com.skynest.uitesting.config.ConfigurationManager;
 import com.skynest.uitesting.models.Bucket;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.*;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -50,9 +50,8 @@ public class HomePage extends LoadableComponent<HomePage> {
         return new AdminPanelPage(driver);
     }
 
-    public BucketPage goToBucket() {
-        // bucket3.click();
-        return new BucketPage(driver);
+    public BucketPage openBucket(BucketResponse bucket) {
+        return new BucketPage(driver, bucket.getBucketId());
     }
 
     public BucketModal openBucketCreationModal() {
@@ -92,15 +91,15 @@ public class HomePage extends LoadableComponent<HomePage> {
     }
 
     public boolean hasBucket(Bucket bucket) {
-        By createdBucketNameDivBy = concatenateCommonBucketBy(bucket.getName());
-        By createdBucketDescriptionDivBy = concatenateCommonBucketBy(bucket.getDescription());
+        By createdBucketNameDivBy = getDivContainingBucketInfoBy(bucket.getName());
+        By createdBucketDescriptionDivBy = getDivContainingBucketInfoBy(bucket.getDescription());
         pageActions.waitForElement(driver, createdBucketNameDivBy, 10);
         List<WebElement> createdBucketName = driver.findElements(createdBucketNameDivBy);
         List<WebElement> createdBucketDescription = driver.findElements(createdBucketDescriptionDivBy);
         return !createdBucketName.isEmpty() && !createdBucketDescription.isEmpty();
     }
 
-    public boolean hasDisplayedMessage() {
+    public boolean hasDisplayedSuccessMessage() {
         By alertMessageBy = By.cssSelector(BUCKET_DELETE_LINK);
         pageActions.waitForElement(driver, alertMessageBy, 5);
         List<WebElement> alertMessage = driver.findElements(alertMessageBy);
@@ -118,7 +117,7 @@ public class HomePage extends LoadableComponent<HomePage> {
         driver.switchTo().alert().getText();
     }
 
-    private By concatenateCommonBucketBy(String bucketInfoPath) {
+    private By getDivContainingBucketInfoBy(String bucketInfoPath) {
         return By.xpath("//div[contains(text(), '" + bucketInfoPath + "')]");
     }
 

@@ -9,6 +9,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
 
+import java.util.HashMap;
+
+import static com.skynest.uitesting.webdriver.WebDriverPreferenceConstants.*;
+
 public enum WebDriverFactory {
 
     CHROME {
@@ -20,27 +24,29 @@ public enum WebDriverFactory {
 
         @Override
         public ChromeOptions getOptions() {
+            HashMap<String, Object> chromePrefs = new HashMap<>();
+            chromePrefs.put("download.default_directory", DOWNLOAD_PATH);
             return new ChromeOptions()
                     .addArguments(START_MAXIMIZED)
                     .addArguments(DISABLE_INFOBARS)
-                    .addArguments(DISABLE_NOTIFICATIONS);
+                    .addArguments(DISABLE_NOTIFICATIONS)
+                    .setExperimentalOption("prefs", chromePrefs);
+        }
+    },
+    FIREFOX {
+        @Override
+        public WebDriver createDriver() {
+            WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
+            return new FirefoxDriver(getOptions());
+        }
+
+        @Override
+        public FirefoxOptions getOptions() {
+            return new FirefoxOptions()
+                    .addArguments(FULL_HD_MAX_WIDTH)
+                    .addArguments(FULL_HD_MAX_HEIGHT);
         }
     };
-//    ,
-//    FIREFOX {
-//        @Override
-//        public WebDriver createDriver() {
-//            WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
-//            return new FirefoxDriver(getOptions());
-//        }
-//
-//        @Override
-//        public FirefoxOptions getOptions() {
-//            return new FirefoxOptions()
-//                    .addArguments(FULL_HD_MAX_WIDTH)
-//                    .addArguments(FULL_HD_MAX_HEIGHT);
-//        }
-//    };
 
     private static final String START_MAXIMIZED = "--start-maximized";
     private static final String DISABLE_NOTIFICATIONS = "--disable-notifications";

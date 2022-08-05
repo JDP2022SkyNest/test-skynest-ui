@@ -1,22 +1,40 @@
+import com.skynest.uitesting.api.BucketResponse;
+import com.skynest.uitesting.models.Bucket;
 import com.skynest.uitesting.pages.BucketPage;
-import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
-import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.UUID;
+
+import static org.testng.Assert.assertTrue;
 
 public class DownloadFileTest extends TestSetup {
 
     @Test
-    public void download_file_from_folder() throws InterruptedException {
+    public void logged_users_should_be_able_to_download_files_from_buckets() throws URISyntaxException {
         // ARRANGE
-        LoginPage loginPage = new LoginPage(driver).get();
-        HomePage homePage = loginPage.loginAs(email, password);
+        Bucket bucket = Bucket.createRandomValidBucket();
+
+        new LoginPage(driver).get();
+        setBrowserAuthToken();
+        BucketResponse createdBucket = apiClient.createBucket(bucket);
+        UUID createdBucketUUID = createdBucket.getBucketId();
+        apiClient.uploadTestFileToBucket(createdBucketUUID);
 
         // ACT
-        BucketPage bucketPage = homePage.goToBucket();
-        bucketPage.downloadFile();
+        BucketPage bucketPage = new BucketPage(driver, createdBucketUUID).get();
+        bucketPage.downloadFirstFile();
 
         // ASSERT
-        // Assert.assertTrue(homePage.isAlertPresent());
+         assertTrue(bucketPage.isFileDownloaded());
+    }
+
+    @AfterMethod
+    public void fileCleanup() {
+        File file = new File(BucketPage.DOWNLOADED_FILE_DEFAULT_PATH);
+        file.deleteOnExit();
     }
 }

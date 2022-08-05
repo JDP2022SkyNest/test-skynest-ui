@@ -2,8 +2,6 @@ import com.skynest.uitesting.models.Bucket;
 import com.skynest.uitesting.pages.BucketModal;
 import com.skynest.uitesting.pages.HomePage;
 import com.skynest.uitesting.pages.LoginPage;
-import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -44,7 +42,7 @@ public class BucketsTest extends TestSetup {
         homePage.deleteBucket(desiredBucket);
 
         // ASSERT
-        assertTrue(homePage.hasDisplayedMessage(), "No success feedback has been displayed");
+        assertTrue(homePage.hasDisplayedSuccessMessage(), "No success feedback has been displayed");
     }
 
     @DataProvider(name = VALID_BUCKET_PROVIDER)

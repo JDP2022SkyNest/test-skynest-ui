@@ -12,7 +12,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.net.URISyntaxException;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class TestSetup {
@@ -47,7 +46,7 @@ public class TestSetup {
 
     protected void setBrowserAuthToken() throws URISyntaxException {
         CredentialsConfig credentials = ConfigurationManager.getCredentialsConfigInstance();
-        ApiClient apiClient = new ApiClient(ConfigurationManager.getBrowserConfigInstance().apiBaseUrl());
+        apiClient = new ApiClient(ConfigurationManager.getBrowserConfigInstance().apiBaseUrl());
         LoginRequest loginRequest = new LoginRequest(credentials.email(), credentials.password());
         apiClient.login(loginRequest);
         localStorage = ((WebStorage) driver).getLocalStorage();
