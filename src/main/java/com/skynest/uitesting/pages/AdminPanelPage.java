@@ -47,13 +47,7 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
 
     public boolean isSuccessMessageDisplayed() {
         By alertMessageBy = By.cssSelector(".alert-success");
-        try {
-            pageActions.waitForElement(driver, alertMessageBy, 3);
-            return true;
-        } catch (NoSuchElementException ex) {
-            log.info("Success message was not displayed");
-            return false;
-        }
+        return pageActions.isSuccessMessageDisplayed(alertMessageBy);
     }
 
     @Override

@@ -5,9 +5,6 @@ import com.skynest.uitesting.pages.LoginPage;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.net.URISyntaxException;
-
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class BucketsTest extends TestSetup {
@@ -15,7 +12,7 @@ public class BucketsTest extends TestSetup {
     private static final String VALID_BUCKET_PROVIDER = "validBucketProvider";
 
     @Test(dataProvider = VALID_BUCKET_PROVIDER)
-    public void logged_user_can_create_a_bucket(Bucket desiredBucket) throws URISyntaxException {
+    public void logged_user_can_create_a_bucket(Bucket desiredBucket) {
         // ARRANGE
         new LoginPage(driver).get();
         setBrowserAuthToken();
@@ -30,7 +27,7 @@ public class BucketsTest extends TestSetup {
     }
 
     @Test(dataProvider = VALID_BUCKET_PROVIDER)
-    public void logged_user_can_delete_bucket(Bucket desiredBucket) throws URISyntaxException {
+    public void logged_user_can_delete_bucket(Bucket desiredBucket) {
         // ARRANGE
         new LoginPage(driver).get();
         setBrowserAuthToken();

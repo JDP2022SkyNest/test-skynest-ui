@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.testng.Assert.assertTrue;
@@ -16,7 +15,7 @@ import static org.testng.Assert.assertTrue;
 public class AdminPanelTest extends TestSetup {
 
     @Test
-    public void admin_should_be_able_to_promote_existing_worker_users() throws URISyntaxException {
+    public void admin_should_be_able_to_promote_existing_worker_users() {
         // ARRANGE
         User user = getAWorkerIfAny();
 

@@ -1,9 +1,13 @@
 package com.skynest.uitesting.api;
 
-import java.util.List;
-import java.util.Optional;;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
-public class UsersApiUtil {
+import java.util.List;
+import java.util.Optional;
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public final class UsersApiUtil {
 
     public static User getFirstWorkerIfAny(List<User> getAllUsersResponse) {
         Optional<User> first = getAllUsersResponse
@@ -14,6 +18,5 @@ public class UsersApiUtil {
 
         return first.orElse(null);
     }
-
 
 }

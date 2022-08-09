@@ -19,6 +19,7 @@ import io.restassured.internal.log.LogRepository;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,14 +27,15 @@ import java.util.ArrayList;
 
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 
+@Slf4j
 public class BaseClient {
     private final URI baseUri;
     private final RestAssuredConfig restAssuredConfig;
     private final LogRepository logRepository = new LogRepository();
     @Getter private String authToken;
 
-    protected BaseClient(String baseUrl) throws URISyntaxException {
-        baseUri = new URI(baseUrl);
+    protected BaseClient(String baseUrl) {
+        baseUri = URI.create(baseUrl);
 
         ObjectMapper objectMapper = new ObjectMapper()
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)

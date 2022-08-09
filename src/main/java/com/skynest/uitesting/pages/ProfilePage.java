@@ -2,10 +2,10 @@ package com.skynest.uitesting.pages;
 
 import com.skynest.uitesting.config.ConfigurationManager;
 import com.skynest.uitesting.models.User;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -18,18 +18,18 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 
     private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/user-info";
     private static final String INPUT_FORM_PREFIX = "(//input[@type= 'text'])";
+    private static final String EDIT_BUTTON_XPATH = "//button[(text() = 'Edit')]";
 
-    @FindBy(xpath = "//button[(text() = 'Edit')]") private WebElement editButton;
-    @FindBy(how = How.XPATH, using = "//button[(text() = 'Logout')]") private WebElement logoutButton;
-    @FindBy(how = How.XPATH, using = "//button[contains(text(), 'back')]") private WebElement goBackButton;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[1]") private WebElement firstNameField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[2]") private WebElement lastNameField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[3]") private WebElement emailField;
-    //@FindBy(how = How.XPATH, using = "//input[@type= 'number'][1]") private WebElement phoneNumberField;
-    @FindBy(xpath = "//body/div[@id='root']/section[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[4]/div[2]/input[1]") private WebElement phoneNumberField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[4]") private WebElement positionField;
-    @FindBy(how = How.XPATH, using = INPUT_FORM_PREFIX + "[5]") private WebElement addressField;
-    @FindBy(how = How.XPATH, using = "//button[text() = 'Update']") private WebElement updateButton;
+    @FindBy(xpath = EDIT_BUTTON_XPATH) private WebElement editButton;
+    @FindBy(xpath = "//button[(text() = 'Logout')]") private WebElement logoutButton;
+    @FindBy(xpath = "//button[contains(text(), 'back')]") private WebElement goBackButton;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[1]") private WebElement firstNameField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[2]") private WebElement lastNameField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[3]") private WebElement emailField;
+    @FindBy(xpath = "//input[@type= 'number'][1]") private WebElement phoneNumberField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[4]") private WebElement positionField;
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[5]") private WebElement addressField;
+    @FindBy(xpath = "//button[text() = 'Update']") private WebElement updateButton;
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;
@@ -38,16 +38,19 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
     }
 
     public ProfilePage editInfoTo(User updatedUser) {
-        //pageActions.waitPersistentlyForElementToAppear(editButton, 3);
         editButton.click();
         pageActions.clearAndType(firstNameField, updatedUser.getFirstName());
         pageActions.clearAndType(lastNameField, updatedUser.getLastName());
-        //pageActions.clearAndType(emailField, updatedUser.getEmailAddress());
         pageActions.clearAndType(phoneNumberField, updatedUser.getPhoneNumber());
         pageActions.clearAndType(positionField, updatedUser.getPosition());
         pageActions.clearAndType(addressField, updatedUser.getHomeAddress());
         updateButton.click();
         return this;
+    }
+
+    public boolean isSuccessMessageDisplayed() {
+        By alertMessageBy = By.cssSelector(".alert-success");
+        return pageActions.isSuccessMessageDisplayed(alertMessageBy);
     }
 
     public boolean isDisplayedCorrectly() {
@@ -57,6 +60,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
     @Override
     protected void load() {
         driver.get(URL);
+        pageActions.waitForElement(driver, By.xpath(EDIT_BUTTON_XPATH), 2);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class User {
                 .lastName(faker.name().lastName())
                 .emailAddress(generateValidEmail())
                 .phoneNumber(randomPhoneNumber)
-                .homeAddress(faker.address().fullAddress())
+                .homeAddress(faker.address().streetAddress())
                 .position(faker.lordOfTheRings().character())
                 .password(randomPassword)
                 .confirmPassword(randomPassword)

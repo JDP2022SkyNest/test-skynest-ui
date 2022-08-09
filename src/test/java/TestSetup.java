@@ -11,8 +11,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import java.net.URISyntaxException;
-
 @Slf4j
 public class TestSetup {
     protected WebDriver driver;
@@ -22,7 +20,7 @@ public class TestSetup {
     private LocalStorage localStorage;
 
     @BeforeSuite
-    public void globalSetup() throws URISyntaxException {
+    public void globalSetup() {
         apiClient = new ApiClient(ConfigurationManager.getBrowserConfigInstance().apiBaseUrl());
         CredentialsConfig credentials = ConfigurationManager.getCredentialsConfigInstance();
         email = credentials.email();
@@ -44,7 +42,7 @@ public class TestSetup {
         return WebDriverFactory.CHROME.createDriver();
     }
 
-    protected void setBrowserAuthToken() throws URISyntaxException {
+    protected void setBrowserAuthToken() {
         CredentialsConfig credentials = ConfigurationManager.getCredentialsConfigInstance();
         apiClient = new ApiClient(ConfigurationManager.getBrowserConfigInstance().apiBaseUrl());
         LoginRequest loginRequest = new LoginRequest(credentials.email(), credentials.password());

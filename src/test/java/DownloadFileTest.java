@@ -14,7 +14,7 @@ import static org.testng.Assert.assertTrue;
 public class DownloadFileTest extends TestSetup {
 
     @Test
-    public void logged_users_should_be_able_to_download_files_from_buckets() throws URISyntaxException {
+    public void logged_users_should_be_able_to_download_files_from_buckets() {
         // ARRANGE
         Bucket bucket = Bucket.createRandomValidBucket();
 
@@ -29,7 +29,7 @@ public class DownloadFileTest extends TestSetup {
         bucketPage.downloadFirstFile();
 
         // ASSERT
-         assertTrue(bucketPage.isFileDownloaded());
+        assertTrue(bucketPage.isFileDownloaded());
     }
 
     @AfterMethod

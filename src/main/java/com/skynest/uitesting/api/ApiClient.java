@@ -5,23 +5,21 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.UUID;
 
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 
 public class ApiClient extends BaseClient {
 
-    public ApiClient(String targetDomain) throws URISyntaxException {
+    public ApiClient(String targetDomain) {
         super(targetDomain);
     }
 
-    public Response login(LoginRequest loginRequest) {
+    public void login(LoginRequest loginRequest) {
         Response response = requestMaker()
                 .body(loginRequest)
                 .post("/public/login");
         setAuthToken(response.getHeader(AUTHORIZATION));
-        return response;
     }
 
     public Response getAllUsers() {
@@ -37,8 +35,8 @@ public class ApiClient extends BaseClient {
         return response.as(BucketResponse.class);
     }
 
-    public Response uploadTestFileToBucket(UUID bucketId) {
-        return requestMaker()
+    public void uploadTestFileToBucket(UUID bucketId) {
+        requestMaker()
                 .contentType(ContentType.MULTIPART)
                 .multiPart("file", new File("src/test/resources/upload_test_file.txt"))
                 .pathParam("bucketId", bucketId)
