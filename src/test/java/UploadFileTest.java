@@ -1,9 +1,6 @@
 import com.skynest.uitesting.models.Bucket;
 import com.skynest.uitesting.pages.BucketModal;
-import com.skynest.uitesting.pages.BucketPage;
 import com.skynest.uitesting.pages.HomePage;
-import com.skynest.uitesting.pages.LoginPage;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.net.URISyntaxException;
@@ -16,8 +13,7 @@ public class UploadFileTest extends TestSetup  {
         String desiredFileName = "uzivamUFanti";
         Bucket desiredBucket = Bucket.createRandomValidBucket();
 
-        new LoginPage(driver).get();
-        setBrowserAuthToken();
+        navigateToAPageAndSetToken();
         HomePage homePage = new HomePage(driver).get();
         BucketModal bucketModal = homePage.openBucketCreationModal();
         homePage = bucketModal.createBucket(desiredBucket);

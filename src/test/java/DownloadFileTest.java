@@ -1,12 +1,10 @@
 import com.skynest.uitesting.api.BucketResponse;
 import com.skynest.uitesting.models.Bucket;
 import com.skynest.uitesting.pages.BucketPage;
-import com.skynest.uitesting.pages.LoginPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.UUID;
 
 import static org.testng.Assert.assertTrue;
@@ -18,8 +16,7 @@ public class DownloadFileTest extends TestSetup {
         // ARRANGE
         Bucket bucket = Bucket.createRandomValidBucket();
 
-        new LoginPage(driver).get();
-        setBrowserAuthToken();
+        navigateToAPageAndSetToken();
         BucketResponse createdBucket = apiClient.createBucket(bucket);
         UUID createdBucketUUID = createdBucket.getBucketId();
         apiClient.uploadTestFileToBucket(createdBucketUUID);

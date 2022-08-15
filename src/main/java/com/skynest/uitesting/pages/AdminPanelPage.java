@@ -15,13 +15,17 @@ public class AdminPanelPage extends LoadableComponent<AdminPanelPage> {
 
     private final WebDriver driver;
     private final PageActions pageActions;
-    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/admin-panel";
 
+    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/admin-panel";
     private final By promoteButtonBy = By.cssSelector(".btn-secondary.button-width");
     private static final String SINGLE_SEARCH_RESULT_ACCORDION = ".shadow.accordion";
     private final By singleSearchResultAccordionBy = By.cssSelector(SINGLE_SEARCH_RESULT_ACCORDION);
-    @FindBy(xpath = "//input[@type ='text']") private WebElement searchField;
-    @FindBy(css = SINGLE_SEARCH_RESULT_ACCORDION) private WebElement singleSearchResultAccordion;
+
+    @FindBy(xpath = "//input[@type ='text']")
+    private WebElement searchField;
+
+    @FindBy(css = SINGLE_SEARCH_RESULT_ACCORDION)
+    private WebElement singleSearchResultAccordion;
 
     public AdminPanelPage(WebDriver driver) {
         this.driver = driver;

@@ -1,5 +1,4 @@
 import com.skynest.uitesting.models.User;
-import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.pages.ProfilePage;
 import org.testng.annotations.Test;
 
@@ -12,8 +11,7 @@ public class EditAccountTest extends TestSetup {
         // ARRANGE
         User newUserInfo = User.generateValidUser();
 
-        new LoginPage(driver).get();
-        setBrowserAuthToken();
+        navigateToAPageAndSetToken();
 
         // ACT
         ProfilePage profilePage = new ProfilePage(driver).get();

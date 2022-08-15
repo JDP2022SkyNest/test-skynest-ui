@@ -1,7 +1,6 @@
 import com.skynest.uitesting.models.Bucket;
 import com.skynest.uitesting.pages.BucketModal;
 import com.skynest.uitesting.pages.HomePage;
-import com.skynest.uitesting.pages.LoginPage;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,8 +13,7 @@ public class BucketsTest extends TestSetup {
     @Test(dataProvider = VALID_BUCKET_PROVIDER)
     public void logged_user_can_create_a_bucket(Bucket desiredBucket) {
         // ARRANGE
-        new LoginPage(driver).get();
-        setBrowserAuthToken();
+        navigateToAPageAndSetToken();
         HomePage homePage = new HomePage(driver).get();
 
         // ACT
@@ -29,8 +27,7 @@ public class BucketsTest extends TestSetup {
     @Test(dataProvider = VALID_BUCKET_PROVIDER)
     public void logged_user_can_delete_bucket(Bucket desiredBucket) {
         // ARRANGE
-        new LoginPage(driver).get();
-        setBrowserAuthToken();
+        navigateToAPageAndSetToken();
         HomePage homePage = new HomePage(driver).get();
         BucketModal bucketModal = homePage.openBucketCreationModal();
         homePage = bucketModal.createBucket(desiredBucket);

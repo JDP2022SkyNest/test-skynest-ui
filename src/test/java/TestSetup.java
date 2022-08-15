@@ -2,6 +2,7 @@ import com.skynest.uitesting.api.ApiClient;
 import com.skynest.uitesting.api.LoginRequest;
 import com.skynest.uitesting.config.ConfigurationManager;
 import com.skynest.uitesting.config.CredentialsConfig;
+import com.skynest.uitesting.pages.LoginPage;
 import com.skynest.uitesting.webdriver.WebDriverFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -42,7 +43,12 @@ public class TestSetup {
         return WebDriverFactory.CHROME.createDriver();
     }
 
-    protected void setBrowserAuthToken() {
+    protected void navigateToAPageAndSetToken() {
+        new LoginPage(driver).get();
+        setBrowserAuthToken();
+    }
+
+    private void setBrowserAuthToken() {
         CredentialsConfig credentials = ConfigurationManager.getCredentialsConfigInstance();
         apiClient = new ApiClient(ConfigurationManager.getBrowserConfigInstance().apiBaseUrl());
         LoginRequest loginRequest = new LoginRequest(credentials.email(), credentials.password());

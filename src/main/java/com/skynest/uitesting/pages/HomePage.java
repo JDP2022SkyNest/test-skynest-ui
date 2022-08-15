@@ -24,14 +24,29 @@ public class HomePage extends LoadableComponent<HomePage> {
     private static final String USER_DROPDOWN_MENU_LOCATOR = "//div[@class = 'dropdown-menu-admin']";
     private static final String BUCKET_DELETE_LINK = "a.text-danger";
 
-    @FindBy(className = "side-bar") private WebElement sideBar;
-    @FindBy(className = "burger") private WebElement burgerMenu;
-    @FindBy(xpath = "//span[contains(text(), 'Create')]") private WebElement createBucketButton;
-    @FindBy(xpath = "//button[@class='btn admin mr-2']//*[name()='svg']") private WebElement adminPanelButton;
-    @FindBy(id = "dropdown-menu-align-end") private WebElement userMenuDropdown;
-    @FindBy(xpath = USER_DROPDOWN_MENU_LOCATOR + "/a[1]") private WebElement yourProfileListItem;
-    @FindBy(css = BUCKET_DELETE_LINK) private WebElement bucketDeleteLink;
-    @FindBy(xpath = "//p[contains(text(), 'Bucket Successfully Deleted')]") private WebElement bucketDeletedSuccessAlert;
+    @FindBy(className = "side-bar")
+    private WebElement sideBar;
+
+    @FindBy(className = "burger")
+    private WebElement burgerMenu;
+
+    @FindBy(xpath = "//span[contains(text(), 'Create')]")
+    private WebElement createBucketButton;
+
+    @FindBy(xpath = "//button[@class='btn admin mr-2']//*[name()='svg']")
+    private WebElement adminPanelButton;
+
+    @FindBy(id = "dropdown-menu-align-end")
+    private WebElement userMenuDropdown;
+
+    @FindBy(xpath = USER_DROPDOWN_MENU_LOCATOR + "/a[1]")
+    private WebElement yourProfileListItem;
+
+    @FindBy(css = BUCKET_DELETE_LINK)
+    private WebElement bucketDeleteLink;
+
+    @FindBy(xpath = "//p[contains(text(), 'Bucket Successfully Deleted')]")
+    private WebElement bucketDeletedSuccessAlert;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;

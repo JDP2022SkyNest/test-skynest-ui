@@ -20,16 +20,35 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
     private static final String INPUT_FORM_PREFIX = "(//input[@type= 'text'])";
     private static final String EDIT_BUTTON_XPATH = "//button[(text() = 'Edit')]";
 
-    @FindBy(xpath = EDIT_BUTTON_XPATH) private WebElement editButton;
-    @FindBy(xpath = "//button[(text() = 'Logout')]") private WebElement logoutButton;
-    @FindBy(xpath = "//button[contains(text(), 'back')]") private WebElement goBackButton;
-    @FindBy(xpath = INPUT_FORM_PREFIX + "[1]") private WebElement firstNameField;
-    @FindBy(xpath = INPUT_FORM_PREFIX + "[2]") private WebElement lastNameField;
-    @FindBy(xpath = INPUT_FORM_PREFIX + "[3]") private WebElement emailField;
-    @FindBy(xpath = "//input[@type= 'number'][1]") private WebElement phoneNumberField;
-    @FindBy(xpath = INPUT_FORM_PREFIX + "[4]") private WebElement positionField;
-    @FindBy(xpath = INPUT_FORM_PREFIX + "[5]") private WebElement addressField;
-    @FindBy(xpath = "//button[text() = 'Update']") private WebElement updateButton;
+    @FindBy(xpath = EDIT_BUTTON_XPATH)
+    private WebElement editButton;
+
+    @FindBy(xpath = "//button[(text() = 'Logout')]")
+    private WebElement logoutButton;
+
+    @FindBy(xpath = "//button[contains(text(), 'back')]")
+    private WebElement goBackButton;
+
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[1]")
+    private WebElement firstNameField;
+
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[2]")
+    private WebElement lastNameField;
+
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[3]")
+    private WebElement emailField;
+
+    @FindBy(xpath = "//input[@type= 'number'][1]")
+    private WebElement phoneNumberField;
+
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[4]")
+    private WebElement positionField;
+
+    @FindBy(xpath = INPUT_FORM_PREFIX + "[5]")
+    private WebElement addressField;
+
+    @FindBy(xpath = "//button[text() = 'Update']")
+    private WebElement updateButton;
 
     public ProfilePage(WebDriver driver) {
         this.driver = driver;
@@ -68,9 +87,4 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
         assertTrue(driver.getCurrentUrl().equalsIgnoreCase(URL));
         assertTrue(isDisplayedCorrectly());
     }
-
-    // logout
-
-    // go back
-
 }

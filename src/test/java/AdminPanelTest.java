@@ -3,7 +3,6 @@ import com.skynest.uitesting.api.User;
 import com.skynest.uitesting.api.UsersApiUtil;
 import com.skynest.uitesting.pages.AdminPanelPage;
 import com.skynest.uitesting.pages.HomePage;
-import com.skynest.uitesting.pages.LoginPage;
 import io.restassured.response.Response;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -19,8 +18,7 @@ public class AdminPanelTest extends TestSetup {
         // ARRANGE
         User user = getAWorkerIfAny();
 
-        new LoginPage(driver).get();
-        setBrowserAuthToken();
+        navigateToAPageAndSetToken();
         HomePage homePage = new HomePage(driver).get();
         AdminPanelPage adminPanelPage = homePage.goToAdminPanelPage();
 

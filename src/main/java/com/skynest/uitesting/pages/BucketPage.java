@@ -1,7 +1,6 @@
 package com.skynest.uitesting.pages;
 
 import com.skynest.uitesting.config.ConfigurationManager;
-import com.skynest.uitesting.webdriver.WebDriverFactory;
 import com.skynest.uitesting.webdriver.WebDriverPreferenceConstants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,17 +21,29 @@ public class BucketPage extends LoadableComponent<BucketPage> {
 
     private final WebDriver driver;
     private final PageActions pageActions;
+
     private static final String BASE_URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/bucket/";
     private final String bucketSpecificUrl;
     private String localPath;
     public static final String DOWNLOADED_FILE_DEFAULT_PATH = WebDriverPreferenceConstants.DOWNLOAD_PATH + "\\upload_test_file.txt";
 
-    @FindBy(xpath = "(//div[@class = 'dropdown'])[2]/button") private WebElement fileDropdownButton;
-    @FindBy(xpath = "//a[normalize-space()='Download File']") private WebElement downloadFileOption;
-    @FindBy(xpath = "//span[contains(text(), 'Upload')]") private WebElement uploadToBucketButton;
-    @FindBy(xpath = "//input[@id='formFile']") private WebElement modalChooseFileButton;
-    @FindBy(xpath = "//button[normalize-space()='Upload']") private WebElement modalUploadButton;
-    @FindAll({ @FindBy(xpath = "") }) private List<WebElement> files;
+    @FindBy(xpath = "(//div[@class = 'dropdown'])[2]/button")
+    private WebElement fileDropdownButton;
+
+    @FindBy(xpath = "//a[normalize-space()='Download File']")
+    private WebElement downloadFileOption;
+
+    @FindBy(xpath = "//span[contains(text(), 'Upload')]")
+    private WebElement uploadToBucketButton;
+
+    @FindBy(xpath = "//input[@id='formFile']")
+    private WebElement modalChooseFileButton;
+
+    @FindBy(xpath = "//button[normalize-space()='Upload']")
+    private WebElement modalUploadButton;
+
+    @FindAll({ @FindBy(xpath = "") })
+    private List<WebElement> files;
 
     public BucketPage(WebDriver driver, UUID bucketUUID) {
         this.driver = driver;

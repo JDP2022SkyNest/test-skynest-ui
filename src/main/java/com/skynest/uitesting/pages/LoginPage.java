@@ -4,7 +4,6 @@ import com.skynest.uitesting.config.ConfigurationManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -17,10 +16,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/login";
 
-    @FindBy(how = How.ID, using = "emailInput") private WebElement emailField;
-    @FindBy(how = How.ID, using = "passwordInput") private WebElement passwordField;
-    @FindBy(how = How.XPATH, using = "//button[text()='Login']") private WebElement submitButton;
-    @FindBy(how = How.XPATH, using = "//a[contains(@href, '/signup')]") private WebElement registerLink;
+    @FindBy(id = "emailInput")
+    private WebElement emailField;
+
+    @FindBy(id = "passwordInput")
+    private WebElement passwordField;
+
+    @FindBy(xpath = "//button[text()='Login']")
+    private WebElement submitButton;
+
+    @FindBy(xpath = "//a[contains(@href, '/signup')]")
+    private WebElement registerLink;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;

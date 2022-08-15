@@ -11,9 +11,14 @@ public class BucketModal {
     private final WebDriver driver;
     private final PageActions pageActions;
 
-    @FindBy(xpath = "//input[@id='nameInp']") private WebElement nameField;
-    @FindBy(xpath = "//input[@id='descrInp']") private WebElement descriptionField;
-    @FindBy(xpath = "//button[contains(text(),'Create')]") private WebElement createButton;
+    @FindBy(xpath = "//input[@id='nameInp']")
+    private WebElement nameField;
+
+    @FindBy(xpath = "//input[@id='descrInp']")
+    private WebElement descriptionField;
+
+    @FindBy(xpath = "//button[contains(text(),'Create')]")
+    private WebElement createButton;
 
     public BucketModal(WebDriver driver) {
         this.driver = driver;
